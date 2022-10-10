@@ -13,15 +13,15 @@ rot_speed = 0
 
 def main_loop():
     debug = True
-    
+
     motion_sim = motion.TurtleRobot()
     motion_sim2 = motion.TurtleOmniRobot()
-    
+
     #camera instance for normal web cameras
     #cam = camera.OpenCVCamera(id = 2)
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
-    
+
     processor = image_processor.ImageProcessor(cam, debug=debug)
 
     processor.start()
@@ -31,6 +31,7 @@ def main_loop():
     start = time.time()
     fps = 0
     frame = 0
+    #frame counter
     frame_cnt = 0
     try:
         while True:
@@ -51,7 +52,7 @@ def main_loop():
                 print("FPS: {}, framecount: {}".format(fps, frame_cnt))
                 print("ball_count: {}".format(len(processedData.balls)))
                 try:
-                    
+
                     print(processedData.balls[0].size)
                     robo_x =processedData.balls[0].x
                     robo_x -= 424
@@ -67,7 +68,7 @@ def main_loop():
 
                 #if (robo_y == 320 & robo_x == 424):
                 #    print("nice")
-                
+
 
                 #if (frame_cnt > 1000):
                 #    break
