@@ -4,5 +4,6 @@
 
 
 *Whole team*: battery charging instruction
+
 *Andres:* implementing omnimotion (1h) +
 *Elias:* implementing omnimotion (1h) +
