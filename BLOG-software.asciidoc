@@ -1,5 +1,11 @@
 == Blog
 
+
+=== Monday 2022-09-26
+
+*Elias:* 2h soldered adapter for robot battery connector. Worked image processor and compiling new code. +
+*Andres:* 2h Worked image processor and compiling new code. +
+
 === Thursday 2022-10-06
 
 
@@ -11,3 +17,12 @@
 === Monday 2022-10-10
 
 *Andres:* implementing omnimotion (2.5h) +
+*Andres:* implementing omnimotion (2.5h) +
+
+=== Thursday 2022-10-13
+
+*Andres:* fixing import errors (1h) +
+*Elias:* fixing import errors (1h) +
+*Anton:* doing mechanics (1h) +
+*Andres:* implementing motion (1h) +
+*Elias:* implementing motion (1h) +

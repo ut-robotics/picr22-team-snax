@@ -27,6 +27,9 @@ def main_loop():
     processor.start()
     motion_sim.open()
     motion_sim2.open()
+    irobot = motion.IRobotMotion()
+    omni = motion.OmniMotionRobot()
+    omni.task1()
 
     start = time.time()
     fps = 0
@@ -73,6 +76,7 @@ def main_loop():
                 #if (frame_cnt > 1000):
                 #    break
 
+
             if debug:
                 debug_frame = processedData.debug_frame
 
@@ -80,6 +84,7 @@ def main_loop():
 
                 k = cv2.waitKey(1) & 0xff
                 if k == ord('q'):
+                    
                     break
     except KeyboardInterrupt:
         print("closing...")

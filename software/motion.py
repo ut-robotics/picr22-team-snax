@@ -4,6 +4,7 @@ import numpy as np
 import time
 import serial
 import struct
+import tkinter as tk
 
 class IRobotMotion:
     def open(self):
@@ -109,21 +110,22 @@ class OmniMotionRobot(IRobotMotion):
         self.wheelDistanceFromCenter = 0.15
 
         #calculations for sending movement data
-        self.wheelSpeedToMainboardUnits = gearboxReductionRatio * encoderEdgesPerMotorRevolution / (2*math.PI * wheelRadius * pidControlFrecuency)
+        self.wheelSpeedToMainboardUnits = self.gearboxReductionRatio * self.encoderEdgesPerMotorRevolution / (2*3.141528 * self.wheelRadius * self.pidControlFrecuency)
 
     #sends struct data to mainboard
-    def serialCommunication(rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
+    def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
         ser = serial.Serial("/dev/ttyACM0")
-        movementCommand = struct.pack('<hhhHBH', rearSpeed, leftSpeed, rightSpeed, throwerSpeed, False, 0xAAAA)
+        movementCommand = struct.pack('<hhhHBH', leftSpeed, rearSpeed, rightSpeed, throwerSpeed, True, 0xAAAA)
         ser.write(movementCommand)
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
     def move(self, xSpeed, ySpeed, rotSpeed):
         speeds = [xSpeed, ySpeed, rotSpeed]
         #degrees are counted from the right counterclockwise
-        robotDirection = np.degrees(math.atan2(xSpeed, ySpeed))
-        robotSpeed = sqrt((xSpeed ** 2) + (ySpeed ** 2))
-
+        robotDirection = np.degrees(math.atan2(ySpeed, xSpeed))
+        print(robotDirection)
+        robotSpeed = math.sqrt((xSpeed ** 2) + (ySpeed ** 2))
+        print(robotSpeed)
         wheelLinearVelocities = [0,0,0]
 
         # TODO: do this when implementing turning, not sure if correct
@@ -131,36 +133,29 @@ class OmniMotionRobot(IRobotMotion):
 
         #calculate wheelLinearVelocities
         for i in range(3):
-            wheelLinearVelocities[i] = robotSpeed * math.cos(robotDirection - self.wheelAngles[i]) + wheelDistanceFromCenter * robotAngularVelocity
+            wheelLinearVelocities[i] = robotSpeed * math.cos(math.radians(robotDirection - self.wheelAngles[i])) + self.wheelDistanceFromCenter * robotAngularVelocity
 
+        print(wheelLinearVelocities)
         wheelAngularSpeedInMainboardUnits = [0, 0, 0]
 
         #calculate speeds to send over serial
         for i in range(3):
-            wheelAngularSpeedInMainboardUnits[i] = wheelLinearVelocities[i] * wheelSpeedToMainboardUnits
+            wheelAngularSpeedInMainboardUnits[i] = wheelLinearVelocities[i] * self.wheelSpeedToMainboardUnits
 
-        serialCommunication(wheelAngularSpeedInMainboardUnits[0], wheelAngularSpeedInMainboardUnits[1], wheelAngularSpeedInMainboardUnits[2], 0)
+        self.serialCommunication(int(wheelAngularSpeedInMainboardUnits[0]), int(wheelAngularSpeedInMainboardUnits[1]), int(wheelAngularSpeedInMainboardUnits[2]), 0)
 
     #test function to see if wired correctly
-    def testMotors():
-        serialCommunication(20, 20, 20, 0)
-        time.sleep(3)
-        serialCommunication(-20, -20, -20, 0)
-        time.sleep(3)
-        serialCommunication(0, 0, 0, 0)
-
-        #test this to see if move() works
-        '''
+    def testMotors(self):        
         move(0, 0, 1)
         time.sleep(3)
         move(0, 0, 0)
-        '''
+        
 
-    def task1():
+    def task1(self):
         #robot moves at least 1 metre on the court
-        move(0, 0.3, 0)
+        self.move(0.0, 0, 0.5)
         time.sleep(5)
-        move(0, 0, 0)
+        self.move(0, 0, 0)
 
     def task2():
         #find ball, ball is in the middle of camera view and robot not moving
