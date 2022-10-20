@@ -3,6 +3,7 @@ import numpy as np
 import time
 import serial
 import struct
+import os
 
 class IRobotMotion:
     def open(self):
@@ -24,22 +25,19 @@ class OmniMotionRobot(IRobotMotion):
         self.pidControlFrecuency = 100
         #perhaps correct this
         self.wheelDistanceFromCenter = 0.15
-
-        self.robotSerialDevice =
-
+        #should get right port
+        self.robotSerialDevice = os.popen("python3.9 -m serial.tools.list_ports").read().split()[0]
         #calculations for sending movement data
         self.wheelSpeedToMainboardUnits = self.gearboxReductionRatio * self.encoderEdgesPerMotorRevolution / (2*3.141528 * self.wheelRadius * self.pidControlFrecuency)
 
     #sends struct data to mainboard
     def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
-
         ser = serial.Serial(self.robotSerialDevice, 115200)
         movementCommand = struct.pack('<hhhHBH', leftSpeed, rearSpeed, rightSpeed, throwerSpeed, True, 0xAAAA)
         ser.write(movementCommand)
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
     def move(self, xSpeed, ySpeed, rotSpeed):
-        speeds = [xSpeed, ySpeed, rotSpeed]
         #degrees are counted from the right counterclockwise
         #arctangent
         robotDirection = np.degrees(math.atan2(ySpeed, xSpeed))
@@ -64,34 +62,28 @@ class OmniMotionRobot(IRobotMotion):
 
     # TODO: test this
     #orbit movement around point to find basket
+    #positive orbit speed is orbiting orbiting counterclockwise if viewed from above
     def orbit(self, orbitSpeed, orbitRadius):
         orbitCircumference = orbitRadius * 2 * 3.141528
         timeToCompleteFullCircle = orbitCircumference / orbitSpeed
         #in radians
         rotationalSpeed = 2 * 3.141528 / timeToCompleteFullCircle
-        #we want to rotate looking inward
-        rotationalSpeed = -rotationalSpeed
         #move along x-axis and rotate
-        move(orbitSpeed, 0, rotationalSpeed)
+        self.move(orbitSpeed, 0, rotationalSpeed)
+    
+    # TODO: write special movement function to use when approaching ball that uses only rear wheel to adjust direction 
 
     #stop movement
-    def stop():
-        move(0, 0, 0)
+    def stop(self):
+        self.move(0, 0, 0)
 
     #test function to see if wired correctly
     def testMotors(self):
-        move(0, 0, 1)
+        self.move(0, 0, 1)
         time.sleep(3)
-        move(0, 0, 0)
-
-    def task1(self):
-        #robot moves at least 1 metre on the court
-        self.move(0.3, 0, 0)
-        time.sleep(5)
         self.move(0, 0, 0)
 
-    def task2():
-        #find ball, ball is in the middle of camera view and robot not moving
-        pass
-
-print(serial.tools.list_ports)
+if __name__ == '__main__':
+    iRobot = IRobotMotion()
+    omniRobot = OmniMotionRobot()
+    omniRobot.orbit(0.10,0.3)

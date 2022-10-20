@@ -13,16 +13,10 @@ class State(Enum):
     ORBIT = 3
     THROW = 4
 
-# TODO:
+# TODO: make logic
 class StateMachine:
     def __init__(self):
         self.currentState = State.FIND_BALL
-
-x_old = 0
-y_old = 0
-side_speed = 0
-forward_speed = 0
-rot_speed = 0
 
 # TODO: RUN COLOR CONFIGURATOR
 
@@ -37,9 +31,7 @@ def main():
     processor = image_processor.ImageProcessor(cam, debug=debug)
 
     processor.start()
-    iRobot = motion.IRobotMotion()
-    omniRobot = motion.OmniMotionRobot()
-    omniRobot.task1()
+    
 
     start = time.time()
     fps = 0
@@ -64,13 +56,7 @@ def main():
                 print("FPS: {}, framecount: {}".format(fps, frame_cnt))
                 print("ball_count: {}".format(len(processedData.balls)))
                 try:
-
                     print(processedData.balls[0].size)
-                    robo_x =processedData.balls[0].x
-                    robo_x -= 424
-                    robo_y =processedData.balls[0].y
-                    robo_y -= 320
-
                     print("x: ",processedData.balls[0].x)
                     print("y: ",processedData.balls[0].y)
                 except:
@@ -84,10 +70,11 @@ def main():
 
                 k = cv2.waitKey(1) & 0xff
                 if k == ord('q'):
-
                     break
+
     except KeyboardInterrupt:
         print("closing...")
+
     finally:
         cv2.destroyAllWindows()
         processor.stop()
