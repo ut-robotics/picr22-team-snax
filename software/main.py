@@ -11,11 +11,10 @@ side_speed = 0
 forward_speed = 0
 rot_speed = 0
 
-def main_loop():
-    debug = True
+# TODO: RUN COLOR CONFIGURATOR
 
-    motion_sim = motion.TurtleRobot()
-    motion_sim2 = motion.TurtleOmniRobot()
+def main():
+    debug = True
 
     #camera instance for normal web cameras
     #cam = camera.OpenCVCamera(id = 2)
@@ -25,11 +24,9 @@ def main_loop():
     processor = image_processor.ImageProcessor(cam, debug=debug)
 
     processor.start()
-    motion_sim.open()
-    motion_sim2.open()
-    irobot = motion.IRobotMotion()
-    omni = motion.OmniMotionRobot()
-    omni.task1()
+    iRobot = motion.IRobotMotion()
+    omniRobot = motion.OmniMotionRobot()
+    omniRobot.task1()
 
     start = time.time()
     fps = 0
@@ -45,7 +42,6 @@ def main_loop():
             # objects of interest and calculate the required motion for reaching the objects
 
             frame_cnt +=1
-            motion_sim2.move(5, 5, 0)
             frame += 1
             if frame % 30 == 0:
                 frame = 0
@@ -62,19 +58,10 @@ def main_loop():
                     robo_y =processedData.balls[0].y
                     robo_y -= 320
 
-                    motion_sim.move(robo_x*0.35, 1000000/processedData.balls[0].size, 0.0015*robo_x)
-
                     print("x: ",processedData.balls[0].x)
                     print("y: ",processedData.balls[0].y)
                 except:
                     pass
-
-                #if (robo_y == 320 & robo_x == 424):
-                #    print("nice")
-
-
-                #if (frame_cnt > 1000):
-                #    break
 
 
             if debug:
@@ -84,14 +71,13 @@ def main_loop():
 
                 k = cv2.waitKey(1) & 0xff
                 if k == ord('q'):
-                    
+
                     break
     except KeyboardInterrupt:
         print("closing...")
     finally:
         cv2.destroyAllWindows()
         processor.stop()
-        motion_sim.close()
-        motion_sim2.close()
 
-main_loop()
+if __name__ == '__main__':
+    main()

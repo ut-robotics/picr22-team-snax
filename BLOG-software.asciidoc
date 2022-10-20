@@ -26,3 +26,6 @@
 *Anton:* doing mechanics (1h) +
 *Andres:* implementing motion (1h) +
 *Elias:* implementing motion (1h) +
+
+=== Thursday 2022-10-20
+*Andres:* creating more movement code, refactoring, image processing (1h)
