@@ -25,12 +25,15 @@ class OmniMotionRobot(IRobotMotion):
         #perhaps correct this
         self.wheelDistanceFromCenter = 0.15
 
+        self.robotSerialDevice =
+
         #calculations for sending movement data
         self.wheelSpeedToMainboardUnits = self.gearboxReductionRatio * self.encoderEdgesPerMotorRevolution / (2*3.141528 * self.wheelRadius * self.pidControlFrecuency)
 
     #sends struct data to mainboard
     def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
-        ser = serial.Serial("/dev/ttyACM0")
+
+        ser = serial.Serial(self.robotSerialDevice, 115200)
         movementCommand = struct.pack('<hhhHBH', leftSpeed, rearSpeed, rightSpeed, throwerSpeed, True, 0xAAAA)
         ser.write(movementCommand)
 
@@ -90,3 +93,5 @@ class OmniMotionRobot(IRobotMotion):
     def task2():
         #find ball, ball is in the middle of camera view and robot not moving
         pass
+
+print(serial.tools.list_ports)

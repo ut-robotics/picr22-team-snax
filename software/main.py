@@ -4,6 +4,19 @@ import camera
 import motion
 import cv2
 import time
+from enum import Enum
+
+# TODO: add more nuanced states?
+class State(Enum):
+    FIND_BALL = 1
+    GO_TO_BALL = 2
+    ORBIT = 3
+    THROW = 4
+
+# TODO:
+class StateMachine:
+    def __init__(self):
+        self.currentState = State.FIND_BALL
 
 x_old = 0
 y_old = 0
