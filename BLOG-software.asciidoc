@@ -29,3 +29,8 @@
 
 === Thursday 2022-10-20
 *Andres:* creating more movement code, refactoring, image processing (1h)
+
+=== Monday 2022-10-24
+
+*Andres:* testing movement code, refactoring, image processing, state machine (2h)
+*Elias:* testing movement code, refactoring, image processing, state machine (2h)
