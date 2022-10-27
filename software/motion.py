@@ -78,4 +78,4 @@ class OmniMotionRobot:
 
 if __name__ == '__main__':
     omniRobot = OmniMotionRobot()
-    omniRobot.orbit(0.3,0.5)
+    omniRobot.testMotors()
