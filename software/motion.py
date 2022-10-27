@@ -5,15 +5,7 @@ import serial
 import struct
 import os
 
-class IRobotMotion:
-    def open(self):
-        pass
-    def close(self):
-        pass
-    def move(self, xSpeed, ySpeed, rotSpeed):
-        pass
-
-class OmniMotionRobot(IRobotMotion):
+class OmniMotionRobot:
     def __init__(self):
         #data about robot and motors
         #wheelAngles order = rear, left, right
@@ -73,6 +65,7 @@ class OmniMotionRobot(IRobotMotion):
     
     # TODO: write special movement function to use when approaching ball that uses only rear wheel to adjust direction 
 
+
     #stop movement
     def stop(self):
         self.move(0, 0, 0)
@@ -84,6 +77,5 @@ class OmniMotionRobot(IRobotMotion):
         self.move(0, 0, 0)
 
 if __name__ == '__main__':
-    iRobot = IRobotMotion()
     omniRobot = OmniMotionRobot()
-    omniRobot.orbit(0.10,0.3)
+    omniRobot.orbit(0.3,0.5)

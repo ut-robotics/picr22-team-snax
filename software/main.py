@@ -15,17 +15,19 @@ class State(Enum):
     MANUAL = 5
 
 # TODO: make logic, improve class
-class StateMachine(self, omniRobot):
-    def __init__(self):
+class StateMachine:
+    def __init__(self, omniRobot, cam, processor):
         self.currentState = State.FIND_BALL
         self.robot = omniRobot
+        self.processor = processor
+        self.cam = cam
         self.imageData = 0
 
     def getData(self, depth):
         if not depth:
-            self.imageData = processor.process_frame(aligned_depth = False)
+            self.imageData = self.processor.process_frame(aligned_depth = False)
         else:
-            self.imageData = processor.process_frame(aligned_depth = True)
+            self.imageData = self.processor.process_frame(aligned_depth = True)
 
     def setState(self, state):
         self.currentState = state
@@ -51,37 +53,38 @@ class StateMachine(self, omniRobot):
 
     #center ball in field of view
     def findBall(self):
-        self.ballCount = len(processedData.balls)
+        self.ballCount = len(self.imageData.balls)
 
         #find any ball
         while self.ballCount == 0:
             self.robot.move(0,0,0.5)
             time.sleep(0.2)
-            self.imageData = self.getData(false)
-            self.ballCount = len(processedData.balls)
+            self.imageData = self.getData(False)
+            self.ballCount = len(self.imageData.balls)
 
-        robot.stop()
+        self.robot.stop()
 
         #arbitraryly small size
         self.largestBallSize = 0
         #find largest ball in FOV and turn to it
-        while self.largestBallSize < getLargestBall()[1]:
-            self.largestBallSize = getLargestBall()[1]
-            self.largestBallIndex = getLargestBall()[0]
+        while self.largestBallSize < self.getLargestBall()[1]:
+            self.largestBallSize = self.getLargestBall()[1]
+            self.largestBallIndex = self.getLargestBall()[0]
             self.ballXCoord = self.imageData.balls[self.largestBallIndex].x
 
             #decide which way to turn
+            self.fovCenter = self.cam.rgb_width / 2
 
-            if abs(x - (cam.rgb_width / 2)) < 30:
+            if abs(self.ballXCoord - self.fovCenter) < 30:
                 self.robot.stop()
-            elif x - (cam.rgb_width / 2) > 0:
+            elif self.ballXCoord - self.fovCenter > 0:
                 self.robot.move(0, 0, -0.3)
-            elif x - (cam.rgb_width / 2) < 0:
+            elif self.ballXCoord - self.fovCenter < 0:
                 self.robot.move(0, 0, 3)
 
 
         #check if it is still the largest ball in FOV
-        self.imageData = self.getData(false)
+        self.imageData = self.getData(False)
         if abs(self.largestBallSize - self.getLargestBall()[1]) < 100:
              return True
         else:
@@ -116,17 +119,17 @@ class StateMachine(self, omniRobot):
 
 def main():
     omniRobot = motion.OmniMotionRobot(motion.IRobotMotion)
-    stateMachine = StateMachine(omniRobot)
+    processor = image_processor.ImageProcessor(cam, debug=debug)
+    cam = camera.RealsenseCamera(exposure = 100)
+    processor.start()
+    stateMachine = StateMachine(omniRobot, cam, processor)
     debug = True
 
     #camera instance for normal web cameras
     #cam = camera.OpenCVCamera(id = 2)
     # camera instance for realsense cameras
-    cam = camera.RealsenseCamera(exposure = 100)
 
-    processor = image_processor.ImageProcessor(cam, debug=debug)
 
-    processor.start()
 
     start = time.time()
     fps = 0

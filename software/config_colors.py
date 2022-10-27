@@ -1,7 +1,7 @@
 
 import cv2
 import numpy as np
-import _pickle as pickle
+import pickle as pickle
 import camera
 import image_processor
 from Color import *
