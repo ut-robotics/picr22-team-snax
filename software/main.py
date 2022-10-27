@@ -31,6 +31,7 @@ class StateMachine(self, omniRobot):
         self.currentState = state
 
         if self.currentState == State.FIND_BALL:
+            #is closest ball in FOV
             if self.findBall() == True:
                 self.setState(State.GO_TO_BALL)
             else:
@@ -70,18 +71,21 @@ class StateMachine(self, omniRobot):
             self.ballXCoord = self.imageData.balls[self.largestBallIndex].x
 
             #decide which way to turn
-            if x > (cam.rgb_width / 2):
 
-            else:
-
-            #turn to largest ball
-
+            if abs(x - (cam.rgb_width / 2)) < 30:
+                self.robot.stop()
+            elif x - (cam.rgb_width / 2) > 0:
+                self.robot.move(0, 0, -0.3)
+            elif x - (cam.rgb_width / 2) < 0:
+                self.robot.move(0, 0, 3)
 
 
         #check if it is still the largest ball in FOV
-
-        #else return false
-
+        self.imageData = self.getData(false)
+        if abs(self.largestBallSize - self.getLargestBall()[1]) < 100:
+             return True
+        else:
+            return False
 
     def getLargestBall(self):
         self.largestBallSize = 0
