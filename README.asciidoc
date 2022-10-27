@@ -8,6 +8,40 @@ Georg Elias Humal
 
 Anton Rudchenko
 
+== Blog
+
+
+=== Monday 2022-09-26
+
+*Elias:* Soldered adapter for robot battery connector. Worked image processor and compiling new code. (2h) +
+*Andres:* Worked image processor and compiling new code. (2h) +
+
+=== Thursday 2022-10-06
+
+
+*Whole team*: battery charging instruction (1h) +
+
+*Andres:* implementing omnimotion (1h) +
+*Elias:* implementing omnimotion (1h) +
+
+=== Monday 2022-10-10
+
+*Andres:* implementing omnimotion (2.5h) +
+
+=== Thursday 2022-10-13
+
+*Andres:* implementing motion, fixing import errors (2h) +
+*Elias:* implementing motion, fixing import errors (2h) +
+*Anton:* doing mechanics (1h) +
+
+=== Thursday 2022-10-20
+*Andres:* creating more movement code, refactoring, image processing (1h) +
+
+=== Monday 2022-10-24
+
+*Andres:* testing movement code, refactoring, image processing, state machine (2h) +
+*Elias:* testing movement code, refactoring, image processing, state machine (2h) +
+
 
 == External sources
 
