@@ -118,12 +118,13 @@ class StateMachine:
 # TODO: RUN COLOR CONFIGURATOR
 
 def main():
-    omniRobot = motion.OmniMotionRobot(motion.IRobotMotion)
-    processor = image_processor.ImageProcessor(cam, debug=debug)
-    cam = camera.RealsenseCamera(exposure = 100)
-    processor.start()
-    stateMachine = StateMachine(omniRobot, cam, processor)
     debug = True
+    cam = camera.RealsenseCamera(exposure = 100)
+    processor = image_processor.ImageProcessor(cam, debug=debug)
+    processor.start()
+    
+    omniRobot = motion.OmniMotionRobot()
+    stateMachine = StateMachine(omniRobot, cam, processor)
 
     #camera instance for normal web cameras
     #cam = camera.OpenCVCamera(id = 2)
