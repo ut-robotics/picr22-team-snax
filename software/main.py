@@ -6,6 +6,15 @@ import motion
 import cv2
 import time
 from enum import Enum
+# palli ja roboti vahele ei tohi jääda sequentsi oranz !valge must! kui see nii on siis ignoreeri palli
+# Kui terve pilt on liiga vähe oranz ja liiga must siis ignoreeri palli
+# Selleks, et jooksvalt muuta konstatne on mõislik lugeda neid teisest failist 
+
+#dilate palli piksleid
+# muuda find ball, et ta liiguks vahel aelgasemalt
+# tee orbitit ainult robot.movega
+# kasuta depthi ainult viskamisel
+
 
 class State(Enum):
     FIND_BALL = 1
@@ -23,6 +32,7 @@ class StateMachine:
         self.imageHeight = 0
         self.lastXSpeed = 0
         self.lastYSpeed = 0
+        self.ballSize = 0
 
     def setData(self, data):
         self.imageData = data
@@ -45,6 +55,7 @@ class StateMachine:
     def findBall(self):
         if len(self.imageData.balls) == 0:
             self.robot.move(0,0,1)
+            pass
         else:
             #mine teise state'i
             self.robot.stop()
@@ -58,10 +69,7 @@ class StateMachine:
         #if detect black + white line and if ball y is smaller then do 180degrees turn?
         #dunno how to do this, possibly find holes in orange field
 
-        #TODO calibrate this value
-        if ball.size > 300:
-            robot.stop()
-            #self.currentState = State.ORBIT
+
 
         '''
         x koordinaadist lahutatakse pool pildi laiusest ja normaliseeritakse palli kaugus keskpunktist [-1, 1]
@@ -74,21 +82,30 @@ class StateMachine:
         /
         '''
         try:
-            self.ballCoords = getLargestBallCoords(self.imageData)
+            self.ballCoords = self.getLargestBallCoords(self.imageData)
             self.ballXCoord = self.ballCoords[0]
             self.ballYCoord = self.ballCoords[1]
+            if len(self.imageData.balls) == 0:
+                self.currentState = State.FIND_BALL
+                return
         except:
             self.currentState = State.FIND_BALL
             return
+
+                #TODO calibrate this value
 
         #ball x coord dist from centre [-1, 1], can try different speeds
         self.normalizedXDistanceFromCenter = (self.ballXCoord - (self.imageWidth / 2)) / self.imageWidth
         #y is 1 if ball coord 0, value [0, 1]
         self.normalizedYDistanceFromCenter = (self.imageHeight - self.ballYCoord) / self.imageHeight
 
-        self.xSpeedMultiplier = 1
-        self.ySpeedMultiplier = 2
-        self.rotSpeedMultiplier = 0.3
+        if self.normalizedYDistanceFromCenter < 0.2 and abs(self.normalizedXDistanceFromCenter) < 0.1 :
+            self.robot.stop()
+            self.currentState = State.ORBIT
+
+        self.xSpeedMultiplier = 0.4
+        self.ySpeedMultiplier = 1
+        self.rotSpeedMultiplier = -3
 
         #calculate acceleration, also need to calibrate this.....
         self.robotXSpeed = self.normalizedXDistanceFromCenter * self.xSpeedMultiplier
@@ -107,12 +124,15 @@ class StateMachine:
             if ball.size > self.largestBallSize:
                 self.largestBallX = ball.x
                 self.largestBallY = ball.y
+                self.ballSize = ball.size
 
         return (self.largestBallX, self.largestBallY) 
     
     #1st thing center largest ball???
     #if i see the hoop, orbit accordingly, else just orbit 
     def orbit(self):
+        self.robot.stop()
+        self.currentState = State.FIND_BALL
         pass
 
     #use rear wheel correcting and set correct thrower speed
@@ -124,7 +144,7 @@ class StateMachine:
 
 # TODO: RUN COLOR CONFIGURATOR
 def main():
-    debug = True
+    debug = False
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
     processor = image_processor.ImageProcessor(cam, debug=debug)
@@ -168,6 +188,7 @@ def main():
                 start = end
                 print("FPS: {}, framecount: {}".format(fps, frame_cnt))
                 print("ball_count: {}".format(len(processedData.balls)))
+                print(stateMachine.currentState)
                 try:
                     print(processedData.balls[0].size)
                     print("x: ",processedData.balls[0].x)
@@ -183,7 +204,9 @@ def main():
 
                 k = cv2.waitKey(1) & 0xff
                 if k == ord('q'):
+                    
                     break
+                    
 
     except KeyboardInterrupt:
         print("closing...")

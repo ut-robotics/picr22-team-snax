@@ -147,10 +147,10 @@ class ImageProcessor():
     def process_frame(self, aligned_depth = False) -> ProcessedResults:
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
 
-        segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
+        segment.segment(cv2.flip(color_frame, -1), self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
 
         if self.debug:
-            self.debug_frame = np.copy(color_frame)
+            self.debug_frame = np.copy(cv2.flip(color_frame, -1))
 
         balls = self.analyze_balls(self.t_balls, self.fragmented)
         basket_b = self.analyze_baskets(self.t_basket_b, debug_color=c.Color.BLUE.color.tolist())
