@@ -33,6 +33,7 @@ Anton Rudchenko
 *Andres:* implementing motion, fixing import errors (2h) +
 *Elias:* implementing motion, fixing import errors (2h) +
 *Anton:* doing mechanics (1h) +
+*Markus:* assebling test robot electronics (1h) +
 
 === Thursday 2022-10-20
 *Andres:* creating more movement code, refactoring, image processing (1h) +
@@ -42,6 +43,8 @@ Anton Rudchenko
 *Andres:* testing movement code, refactoring, image processing, state machine (2h) +
 *Elias:* testing movement code, refactoring, image processing, state machine (2h) +
 
+=== Thursday 2022-10-27
 
-== External sources
-
+*Andres:* state machine implementation (2h) +
+*Elias:* state machine implementation (2h) +
+*Anton:* presenting thrower (1h) +
