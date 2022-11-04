@@ -25,11 +25,12 @@ class OmniMotionRobot:
     #sends struct data to mainboard
     def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
         ser = serial.Serial(self.robotSerialDevice, 115200)
-        movementCommand = struct.pack('<hhhHBH', leftSpeed, rearSpeed, rightSpeed, throwerSpeed, True, 0xAAAA)
+        movementCommand = struct.pack('<hhhHBH', rearSpeed, leftSpeed, rightSpeed, throwerSpeed, True, 0xAAAA)
         ser.write(movementCommand)
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
     def move(self, xSpeed, ySpeed, rotSpeed):
+        ySpeed = -ySpeed
         #degrees are counted from the right counterclockwise
         #arctangent
         robotDirection = np.degrees(math.atan2(ySpeed, xSpeed))
@@ -65,10 +66,14 @@ class OmniMotionRobot:
     
     # TODO: write special movement function to use when approaching ball that uses only rear wheel to adjust direction 
 
+    def throw(self):
+        pass
+
 
     #stop movement
     def stop(self):
         self.move(0, 0, 0)
+
 
     #test function to see if wired correctly
     def testMotors(self):
@@ -78,4 +83,5 @@ class OmniMotionRobot:
 
 if __name__ == '__main__':
     omniRobot = OmniMotionRobot()
-    omniRobot.testMotors()
+    #omniRobot.serialCommunication(0, 0, 0, 0)
+    omniRobot.orbit(0.3, 1)

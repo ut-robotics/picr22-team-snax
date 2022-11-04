@@ -6,14 +6,11 @@ import motion
 import cv2
 import time
 from enum import Enum
-# palli ja roboti vahele ei tohi jääda sequentsi oranz !valge must! kui see nii on siis ignoreeri palli
-# Kui terve pilt on liiga vähe oranz ja liiga must siis ignoreeri palli
-# Selleks, et jooksvalt muuta konstatne on mõislik lugeda neid teisest failist 
 
-#dilate palli piksleid
-# muuda find ball, et ta liiguks vahel aelgasemalt
-# tee orbitit ainult robot.movega
-# kasuta depthi ainult viskamisel
+# TODO if too much black around ball, ignore it
+# TODO create config file for constants
+# TODO slightly erode then dilate green pixels
+# TODO use depth when throwing
 
 
 class State(Enum):
@@ -32,7 +29,11 @@ class StateMachine:
         self.imageHeight = 0
         self.lastXSpeed = 0
         self.lastYSpeed = 0
+        self.lastXCoord = 0
         self.ballSize = 0
+        self.prevP = 0
+
+        self.findBallCounter = 0
 
     def setData(self, data):
         self.imageData = data
@@ -54,33 +55,22 @@ class StateMachine:
     #find any ball
     def findBall(self):
         if len(self.imageData.balls) == 0:
-            self.robot.move(0,0,1)
-            pass
+            if self.findBallCounter < 30:
+                self.robot.move(0,0,1)
+                self.findBallCounter += 1
+            elif self.findBallCounter < 50:
+                self.robot.move(0,0,0.5)
+                self.findBallCounter += 1
+            else:
+                self.findBallCounter = 0
         else:
-            #mine teise state'i
-            self.robot.stop()
             self.currentState = State.GO_TO_BALL
 
     def goToBall(self):
-        #proportsionaalne liikumine
-        #also positive acceleration is capped
+        # TODO cap positive acceleration
+        # TODO dont go after balls not in the field
+        # TODO if detect black + white line and if ball y is smaller then do 180degrees turn?
 
-        #yle joonte ei l2he
-        #if detect black + white line and if ball y is smaller then do 180degrees turn?
-        #dunno how to do this, possibly find holes in orange field
-
-
-
-        '''
-        x koordinaadist lahutatakse pool pildi laiusest ja normaliseeritakse palli kaugus keskpunktist [-1, 1]
-        y kiirus on pöördv6rdeline y koordinaadiga
-
-        kiiruse graafik
-            ____________
-          /  
-         /
-        /
-        '''
         try:
             self.ballCoords = self.getLargestBallCoords(self.imageData)
             self.ballXCoord = self.ballCoords[0]
@@ -92,24 +82,22 @@ class StateMachine:
             self.currentState = State.FIND_BALL
             return
 
-                #TODO calibrate this value
-
         #ball x coord dist from centre [-1, 1], can try different speeds
         self.normalizedXDistanceFromCenter = (self.ballXCoord - (self.imageWidth / 2)) / self.imageWidth
         #y is 1 if ball coord 0, value [0, 1]
-        self.normalizedYDistanceFromCenter = (self.imageHeight - self.ballYCoord) / self.imageHeight
-
-        if self.normalizedYDistanceFromCenter < 0.2 and abs(self.normalizedXDistanceFromCenter) < 0.1 :
+        self.normalizedYDistanceFromBottom = (self.imageHeight - self.ballYCoord) / self.imageHeight
+        #adjust Y cap
+        if self.normalizedYDistanceFromBottom < 0.25 and abs(self.normalizedXDistanceFromCenter) < 0.1:
             self.robot.stop()
             self.currentState = State.ORBIT
-
+        
+        # TODO calibrate these?
         self.xSpeedMultiplier = 0.4
         self.ySpeedMultiplier = 1
         self.rotSpeedMultiplier = -3
 
-        #calculate acceleration, also need to calibrate this.....
         self.robotXSpeed = self.normalizedXDistanceFromCenter * self.xSpeedMultiplier
-        self.robotYSpeed = self.normalizedYDistanceFromCenter * self.ySpeedMultiplier 
+        self.robotYSpeed = (self.normalizedYDistanceFromBottom - 0.1) * self.ySpeedMultiplier 
         self.robotRotSpeed = self.normalizedXDistanceFromCenter * self.rotSpeedMultiplier
 
         self.robot.move(self.robotXSpeed, self.robotYSpeed, self.robotRotSpeed)
@@ -130,21 +118,38 @@ class StateMachine:
     
     #1st thing center largest ball???
     #if i see the hoop, orbit accordingly, else just orbit 
+    #also adjust radius continuously (2nd parameter), get it from Y normalized distance
+    #remove many self's from code if not necessary
+
+
     def orbit(self):
-        self.robot.stop()
-        self.currentState = State.FIND_BALL
-        pass
+        self.ballCoords = self.getLargestBallCoords(self.imageData)
+        self.ballXCoord = self.ballCoords[0]
+        self.XDistanceFromCenter = self.ballXCoord - (self.imageWidth / 2)
+        self.P = self.XDistanceFromCenter
+        self.D = self.P - self.lastXCoord
+        alpha = 0.002
+        beta = 0
+        PDXspeed = alpha * self.P + beta * self.D
+        self.prevP = self.P
+        if abs(self.P) > 0.08*self.imageWidth:
+            self.robot.move(PDXspeed, 0, 0)
+            return
+ 
+        if abs(self.imageData.basket_b.x - self.imageWidth / 2) < 40:
+            self.currentState = State.THROW
+        self.robot.orbit(0.02, 0.25)
 
     #use rear wheel correcting and set correct thrower speed
     def throw(self):
-        pass
+        self.robot.stop()
 
 
 
 
 # TODO: RUN COLOR CONFIGURATOR
 def main():
-    debug = False
+    debug = True
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
     processor = image_processor.ImageProcessor(cam, debug=debug)
@@ -177,7 +182,6 @@ def main():
                 stateMachine.setState(State.ORBIT)
             if stateMachine.currentState == State.THROW:
                 stateMachine.setState(State.THROW)
-
 
             frame_cnt +=1
             frame += 1
