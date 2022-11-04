@@ -48,3 +48,17 @@ Anton Rudchenko
 *Andres:* state machine implementation (2h) +
 *Elias:* state machine implementation (2h) +
 *Anton:* presenting thrower (1h) +
+
+=== Monday 2022-10-27
+
+*Andres:* state machine implementation (2h) +
+*Elias:* state machine implementation (2h) +
+
+=== Thursday 2022-11-03
+
+*Andres:* fixing minor issues with test robot electronics (2h) +
+*Elias:* fixing minor issues with test robot electronics (2h) +
+
+=== Friday 2022-11-04
+*Markus:* assebling test robot electronics, connecting thrower electronics (1.5h) +
+*Andres:* testing robot on field, implementing orbiting state, image processing (3h) +
