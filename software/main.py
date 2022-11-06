@@ -4,6 +4,7 @@ import image_processor
 import camera
 import motion
 import cv2
+import numpy as np
 import time
 from enum import Enum
 
@@ -126,25 +127,26 @@ class StateMachine:
         self.ballCoords = self.getLargestBallCoords(self.imageData)
         self.ballXCoord = self.ballCoords[0]
         self.XDistanceFromCenter = self.ballXCoord - (self.imageWidth / 2)
-        self.P = self.XDistanceFromCenter
+        self.P = np.sign(self.XDistanceFromCenter)*100*(1-np.exp(-abs(self.XDistanceFromCenter)/100))
         self.D = self.P - self.lastXCoord
-        alpha = 0.002
-        beta = 0
-        PDXspeed = alpha * self.P + beta * self.D
-        self.prevP = self.P
+        '''
         if abs(self.P) > 0.08*self.imageWidth:
             self.robot.move(PDXspeed, 0, 0)
             return
- 
-        if abs(self.imageData.basket_b.x - self.imageWidth / 2) < 40:
+        '''
+        if abs(self.imageData.basket_b.x - self.imageWidth / 2) < 20:
             self.currentState = State.THROW
-        self.robot.orbit(0.02, 0.25)
+
+        self.robot.orbit(0.02, 0.20)
 
     #use rear wheel correcting and set correct thrower speed
     def throw(self):
-        self.robot.stop()
-
-
+        depth = self.imageData.depth_frame
+        depth = depth[self.imageHeight-60][424]
+        self.robot.serialCommunication(0,0,0,125q0) 
+        print(depth)
+        #dist = 1320, spd = 1000
+        #1950, 1250
 
 
 # TODO: RUN COLOR CONFIGURATOR
@@ -163,14 +165,16 @@ def main():
     start = time.time()
     fps = 0
     frame = 0
+    useDepthImage = False
     #frame counter
     frame_cnt = 0
     try:
         while True:
             # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
-            processedData = processor.process_frame(aligned_depth=False)
+            processedData = processor.process_frame(aligned_depth=useDepthImage)
             #updating state machine data
             stateMachine.setData(processedData)
+            useDepthImage = False
 
             # This is where you add the driving behaviour of your robot. It should be able to filter out
             # objects of interest and calculate the required motion for reaching the objects
@@ -181,6 +185,7 @@ def main():
             if stateMachine.currentState == State.ORBIT:
                 stateMachine.setState(State.ORBIT)
             if stateMachine.currentState == State.THROW:
+                useDepthImage = True
                 stateMachine.setState(State.THROW)
 
             frame_cnt +=1
