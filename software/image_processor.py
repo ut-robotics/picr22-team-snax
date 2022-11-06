@@ -107,7 +107,7 @@ class ImageProcessor():
 
         return balls
 
-    def analyze_baskets(self, t_basket, debug_color = (0, 255, 255)) -> list:
+    def analyze_baskets(self, t_basket, debug_color = (0, 255, 255), depth_frame = False) -> list:
         contours, hierarchy = cv2.findContours(t_basket, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         baskets = []
