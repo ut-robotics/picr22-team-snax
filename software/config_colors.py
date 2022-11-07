@@ -32,8 +32,8 @@ cv2.createTrackbar('noise','image',1,5, nothing)
 
 mouse_x	= 0
 mouse_y	= 0
-brush_size	= 1
-noise	= 1
+brush_size = 1
+noise = 1
 p = 0
 
 keyDict = {

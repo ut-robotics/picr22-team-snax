@@ -38,6 +38,7 @@ class ProcessedResults():
         self.color_frame = color_frame
         self.depth_frame = depth_frame
         self.fragmented = fragmented
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2,2))
 
         # can be used to illustrate things in a separate frame buffer
         self.debug_frame = debug_frame
@@ -53,8 +54,8 @@ class ImageProcessor():
             self.colors_lookup = pickle.load(conf)
             self.set_segmentation_table(self.colors_lookup)
 
+        #each of these is just an array of ints, which correspond to colors
         self.fragmented	= np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-
         self.t_balls = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_m = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
@@ -72,6 +73,10 @@ class ImageProcessor():
         self.camera.close()
 
     def analyze_balls(self, t_balls, fragments) -> list:
+        #maybe this costs a lot of performance
+        t_balls = cv2.erode(t_balls, self.kernel, iterations = 1)
+        t_balls = cv2.dilate(t_balls, self.kernel, iterations = 3)
+
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         balls = []
@@ -144,11 +149,14 @@ class ImageProcessor():
 
     def process_frame(self, aligned_depth = False) -> ProcessedResults:
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
+        color_frame = cv2.flip(color_frame, -1)
+        depth_frame = cv2.flip(depth_frame, -1)
 
-        segment.segment(cv2.flip(color_frame, -1), self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
+
+        segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
 
         if self.debug:
-            self.debug_frame = np.copy(cv2.flip(color_frame, -1))
+            self.debug_frame = np.copy(color_frame)
 
         balls = self.analyze_balls(self.t_balls, self.fragmented)
         basket_b = self.analyze_baskets(self.t_basket_b, debug_color=c.Color.BLUE.color.tolist())
