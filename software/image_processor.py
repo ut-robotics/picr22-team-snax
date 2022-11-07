@@ -5,7 +5,6 @@ import numpy as np
 import cv2
 import Color as c
 
-
 class Object():
     def __init__(self, x = -1, y = -1, size = -1, distance = -1, exists = False):
         self.x = x
@@ -23,7 +22,6 @@ class Object():
 
 # results object of image processing. contains coordinates of objects and frame data used for these results
 class ProcessedResults():
-
     def __init__(self, 
                 balls=[], 
                 basket_b = Object(exists = False), 
@@ -90,8 +88,8 @@ class ImageProcessor():
 
             x, y, w, h = cv2.boundingRect(contour)
 
-            ys	= np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
-            xs	= np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
+            ys = np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
+            xs = np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
@@ -163,3 +161,47 @@ class ImageProcessor():
                                 depth_frame=depth_frame, 
                                 fragmented=self.fragmented, 
                                 debug_frame=self.debug_frame)
+if __name__ == "__main__":
+    debug = True
+    # camera instance for realsense cameras
+    cam = camera.RealsenseCamera(exposure = 100)
+    processor = ImageProcessor(cam, debug=debug)
+    processor.start()
+
+    start = time.time()
+    fps = 0
+    frame = 0
+    useDepthImage = False
+    #frame counter
+    frame_cnt = 0
+    try:
+        while True:
+            # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
+            processedData = processor.process_frame(aligned_depth=useDepthImage)
+
+            frame_cnt +=1
+            frame += 1
+            if frame % 30 == 0:
+                frame = 0
+                end = time.time()
+                fps = 30 / (end - start)
+                start = end
+                print("FPS: {}, framecount: {}".format(fps, frame_cnt))
+                print("ball_count: {}".format(len(processedData.balls)))
+                try:
+                    print(processedData.balls[0].size)
+                    print("x: ",processedData.balls[0].x)
+                    print("y: ",processedData.balls[0].y)
+                except:
+                    pass
+
+            debug_frame = processedData.debug_frame
+
+            cv2.imshow('debug', debug_frame)
+
+            k = cv2.waitKey(1) & 0xff
+
+            if k == ord('q'):
+                break
+    except:
+        pass

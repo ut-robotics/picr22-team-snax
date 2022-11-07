@@ -129,21 +129,18 @@ class StateMachine:
         self.XDistanceFromCenter = self.ballXCoord - (self.imageWidth / 2)
         self.P = np.sign(self.XDistanceFromCenter)*100*(1-np.exp(-abs(self.XDistanceFromCenter)/100))
         self.D = self.P - self.lastXCoord
-        '''
-        if abs(self.P) > 0.08*self.imageWidth:
-            self.robot.move(PDXspeed, 0, 0)
-            return
-        '''
+
         if abs(self.imageData.basket_b.x - self.imageWidth / 2) < 20:
             self.currentState = State.THROW
-
+            
         self.robot.orbit(0.02, 0.20)
 
     #use rear wheel correcting and set correct thrower speed
+    #put const y speed and use 
     def throw(self):
         depth = self.imageData.depth_frame
         depth = depth[self.imageHeight-60][424]
-        self.robot.serialCommunication(0,0,0,125q0) 
+        self.robot.serialCommunication(0,0,0,1250) 
         print(depth)
         #dist = 1320, spd = 1000
         #1950, 1250
@@ -152,6 +149,7 @@ class StateMachine:
 # TODO: RUN COLOR CONFIGURATOR
 def main():
     debug = True
+
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
     processor = image_processor.ImageProcessor(cam, debug=debug)
