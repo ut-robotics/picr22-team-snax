@@ -63,3 +63,8 @@ Anton Rudchenko
 === Friday 2022-11-04
 *Markus:* assebling test robot electronics, connecting thrower electronics (1.5h) +
 *Andres:* testing robot on field, implementing orbiting state, image processing (3h) +
+
+=== Sunday 2022-11-04
+*Elias:* Testing thrower (2h) 
+*Andres:* Testing thrower (2h) +
+
