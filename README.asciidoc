@@ -20,6 +20,7 @@ https://a360.co/3WEcizI
 
 *Elias:* Soldered adapter for robot battery connector. Worked image processor and compiling new code. (2h) +
 *Andres:* Worked image processor and compiling new code. (2h) +
+*Anton:* working work (1h) +
 
 === Thursday 2022-10-06
 
@@ -28,10 +29,12 @@ https://a360.co/3WEcizI
 
 *Andres:* implementing omnimotion (1h) +
 *Elias:* implementing omnimotion (1h) +
+*Anton:* working work again (1h) +
 
 === Monday 2022-10-10
 
 *Andres:* implementing omnimotion (2.5h) +
+*Anton:* thrower design dev started (1h) +
 
 === Thursday 2022-10-13
 
@@ -41,12 +44,15 @@ https://a360.co/3WEcizI
 *Markus:* assebling test robot electronics (1h) +
 
 === Thursday 2022-10-20
+
 *Andres:* creating more movement code, refactoring, image processing (1h) +
+*Anton:* fixing stuff on thrower (1h) +
 
 === Monday 2022-10-24
 
 *Andres:* testing movement code, refactoring, image processing, state machine (2h) +
 *Elias:* testing movement code, refactoring, image processing, state machine (2h) +
+*Anton:* thrower parts manufacturing and assembling (2h) +
 
 === Thursday 2022-10-27
 
@@ -58,11 +64,13 @@ https://a360.co/3WEcizI
 
 *Andres:* state machine implementation (2h) +
 *Elias:* state machine implementation (2h) +
+*Anton:* assembling of the test robot (1h) +
 
 === Thursday 2022-11-03
 
 *Andres:* fixing minor issues with test robot electronics (2h) +
 *Elias:* fixing minor issues with test robot electronics (2h) +
+*Anton:* assembling of the test robot (1h) +
 
 === Friday 2022-11-04
 *Markus:* assebling test robot electronics, connecting thrower electronics (1.5h) +
@@ -72,3 +80,5 @@ https://a360.co/3WEcizI
 *Elias:* Testing thrower (2h) +
 *Andres:* Testing thrower (2h) +
 
+=== Monday 2022-11-07
+*All team: * Finishing test robot assembly (3h) +
