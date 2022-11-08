@@ -1,5 +1,6 @@
 import camera
 import segment
+import time
 import pickle as pickle
 import numpy as np
 import cv2
@@ -38,7 +39,6 @@ class ProcessedResults():
         self.color_frame = color_frame
         self.depth_frame = depth_frame
         self.fragmented = fragmented
-        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2,2))
 
         # can be used to illustrate things in a separate frame buffer
         self.debug_frame = debug_frame
@@ -48,7 +48,8 @@ class ProcessedResults():
 class ImageProcessor():
     def __init__(self, camera, color_config = "colors/colors.pkl", debug = False):
         self.camera = camera
-
+        self.kernelSmall = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+        self.kernelLarge = cv2.getStructuringElement(cv2.MORPH_RECT, (5,5))
         self.color_config = color_config
         with open(self.color_config, 'rb') as conf:
             self.colors_lookup = pickle.load(conf)
@@ -74,8 +75,8 @@ class ImageProcessor():
 
     def analyze_balls(self, t_balls, fragments) -> list:
         #maybe this costs a lot of performance
-        t_balls = cv2.erode(t_balls, self.kernel, iterations = 1)
-        t_balls = cv2.dilate(t_balls, self.kernel, iterations = 3)
+        t_balls = cv2.erode(t_balls, self.kernelSmall, iterations = 1)
+        t_balls = cv2.dilate(t_balls, self.kernelLarge, iterations = 3)
 
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
