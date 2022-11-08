@@ -5,7 +5,6 @@ import numpy as np
 import cv2
 import Color as c
 
-
 class Object():
     def __init__(self, x = -1, y = -1, size = -1, distance = -1, exists = False):
         self.x = x
@@ -23,7 +22,6 @@ class Object():
 
 # results object of image processing. contains coordinates of objects and frame data used for these results
 class ProcessedResults():
-
     def __init__(self, 
                 balls=[], 
                 basket_b = Object(exists = False), 
@@ -40,6 +38,7 @@ class ProcessedResults():
         self.color_frame = color_frame
         self.depth_frame = depth_frame
         self.fragmented = fragmented
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2,2))
 
         # can be used to illustrate things in a separate frame buffer
         self.debug_frame = debug_frame
@@ -55,8 +54,8 @@ class ImageProcessor():
             self.colors_lookup = pickle.load(conf)
             self.set_segmentation_table(self.colors_lookup)
 
+        #each of these is just an array of ints, which correspond to colors
         self.fragmented	= np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
-
         self.t_balls = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_b = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
         self.t_basket_m = np.zeros((self.camera.rgb_height, self.camera.rgb_width), dtype=np.uint8)
@@ -74,6 +73,10 @@ class ImageProcessor():
         self.camera.close()
 
     def analyze_balls(self, t_balls, fragments) -> list:
+        #maybe this costs a lot of performance
+        t_balls = cv2.erode(t_balls, self.kernel, iterations = 1)
+        t_balls = cv2.dilate(t_balls, self.kernel, iterations = 3)
+
         contours, hierarchy = cv2.findContours(t_balls, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         balls = []
@@ -90,8 +93,8 @@ class ImageProcessor():
 
             x, y, w, h = cv2.boundingRect(contour)
 
-            ys	= np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
-            xs	= np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
+            ys = np.array(np.arange(y + h, self.camera.rgb_height), dtype=np.uint16)
+            xs = np.array(np.linspace(x + w/2, self.camera.rgb_width / 2, num=len(ys)), dtype=np.uint16)
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
@@ -146,11 +149,14 @@ class ImageProcessor():
 
     def process_frame(self, aligned_depth = False) -> ProcessedResults:
         color_frame, depth_frame = self.get_frame_data(aligned_depth = aligned_depth)
+        color_frame = cv2.flip(color_frame, -1)
+        depth_frame = cv2.flip(depth_frame, -1)
 
-        segment.segment(cv2.flip(color_frame, -1), self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
+
+        segment.segment(color_frame, self.fragmented, self.t_balls, self.t_basket_m, self.t_basket_b)
 
         if self.debug:
-            self.debug_frame = np.copy(cv2.flip(color_frame, -1))
+            self.debug_frame = np.copy(color_frame)
 
         balls = self.analyze_balls(self.t_balls, self.fragmented)
         basket_b = self.analyze_baskets(self.t_basket_b, debug_color=c.Color.BLUE.color.tolist())
@@ -163,3 +169,47 @@ class ImageProcessor():
                                 depth_frame=depth_frame, 
                                 fragmented=self.fragmented, 
                                 debug_frame=self.debug_frame)
+if __name__ == "__main__":
+    debug = True
+    # camera instance for realsense cameras
+    cam = camera.RealsenseCamera(exposure = 100)
+    processor = ImageProcessor(cam, debug=debug)
+    processor.start()
+
+    start = time.time()
+    fps = 0
+    frame = 0
+    useDepthImage = False
+    #frame counter
+    frame_cnt = 0
+    try:
+        while True:
+            # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
+            processedData = processor.process_frame(aligned_depth=useDepthImage)
+
+            frame_cnt +=1
+            frame += 1
+            if frame % 30 == 0:
+                frame = 0
+                end = time.time()
+                fps = 30 / (end - start)
+                start = end
+                print("FPS: {}, framecount: {}".format(fps, frame_cnt))
+                print("ball_count: {}".format(len(processedData.balls)))
+                try:
+                    print(processedData.balls[0].size)
+                    print("x: ",processedData.balls[0].x)
+                    print("y: ",processedData.balls[0].y)
+                except:
+                    pass
+
+            debug_frame = processedData.debug_frame
+
+            cv2.imshow('debug', debug_frame)
+
+            k = cv2.waitKey(1) & 0xff
+
+            if k == ord('q'):
+                break
+    except:
+        pass

@@ -29,7 +29,7 @@ class OmniMotionRobot:
         ser.write(movementCommand)
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
-    def move(self, xSpeed, ySpeed, rotSpeed):
+    def move(self, xSpeed, ySpeed, rotSpeed, throwerSpeed = 0):
         ySpeed = -ySpeed
         #degrees are counted from the right counterclockwise
         #arctangent
@@ -51,7 +51,7 @@ class OmniMotionRobot:
         for i in range(3):
             wheelAngularSpeedInMainboardUnits[i] = wheelLinearVelocities[i] * self.wheelSpeedToMainboardUnits
 
-        self.serialCommunication(int(wheelAngularSpeedInMainboardUnits[0]), int(wheelAngularSpeedInMainboardUnits[1]), int(wheelAngularSpeedInMainboardUnits[2]), 0)
+        self.serialCommunication(int(wheelAngularSpeedInMainboardUnits[0]), int(wheelAngularSpeedInMainboardUnits[1]), int(wheelAngularSpeedInMainboardUnits[2]), throwerSpeed)
 
     # TODO: test this
     #orbit movement around point to find basket
@@ -66,14 +66,9 @@ class OmniMotionRobot:
     
     # TODO: write special movement function to use when approaching ball that uses only rear wheel to adjust direction 
 
-    def throw(self):
-        pass
-
-
     #stop movement
     def stop(self):
         self.move(0, 0, 0)
-
 
     #test function to see if wired correctly
     def testMotors(self):
