@@ -77,11 +77,21 @@ class OmniMotionRobot:
 
     #test function to see if wired correctly
     def testMotors(self):
-        self.move(0, 0, 1)
-        time.sleep(3)
-        self.move(0, 0, 0)
+        while True:
+            self.move(0, 0, 1)
+            time.sleep(3)
+            self.move(0, 0, 0)
+            time.sleep(1)
+            self.move(0, 0, -1)
+            time.sleep(3)
+            self.move(0, 0, 0)
+            self.serialCommunication(0,0,0,1000)
+            time.sleep(2)
+            self.serialCommunication(0,0,0,1400)
+            time.sleep(2)
+            self.serialCommunication(0,0,0,0)
+
 
 if __name__ == '__main__':
     omniRobot = OmniMotionRobot()
-    #omniRobot.serialCommunication(0, 0, 0, 0)
-    omniRobot.orbit(0.3, 1)
+    omniRobot.testMotors()
