@@ -145,6 +145,7 @@ class StateMachine:
                     return
                 else:
                     self.currentState = State.THROW
+                    self.robot.stop()
                     return
         else:
             if abs(self.imageData.basket_m.x - self.imageWidth / 2) < basketMaxDistanceFromCenter:
@@ -154,6 +155,8 @@ class StateMachine:
                     return
                 else:
                     self.currentState = State.THROW
+                    self.robot.stop()
+
                     return
 
         trajectorySpeed = 0.3
@@ -192,16 +195,16 @@ class StateMachine:
     #use rear wheel correcting and set correct thrower speed
     #i have to know that this state always starts at the same distance from the ball and that the basket is almost in the center
     def throw(self):
-        if self.throwerTimer == 1000:
+        if self.throwerTimer == 50:
             self.throwerTimer = 0
             self.currentState = State.FIND_BALL
             self.lastDistance = 0
             return
-
+        basketDistance = 0
         if self.lastDistance == 0:
             basketDistance = 0
 
-        throwerMultiplier = 13.5
+        throwerMultiplier = 35
         if self.throwIntoBlue:
             if basketDistance != -1:
                 basketDistance = self.imageData.basket_b.distance
@@ -211,7 +214,7 @@ class StateMachine:
                 basketDistance = self.imageData.basket_m.distance
                 self.lastDistance = basketDistance 
 
-        
+        print("distance:")        
         print(basketDistance)
         '''
         try:
@@ -228,8 +231,9 @@ class StateMachine:
             rotSpeed = normalizedXDistanceFromCenter * rotSpeedMultiplier
             self.robot.move(0, 0.1, rotSpeed, throwerMultiplier * basketDistance)
         '''    
+        self.robot.move(0, 0.25, 0, 1250)
         
-        self.robot.move(0, 0.1, 0, int(throwerMultiplier * basketDistance))
+        #self.robot.move(0, 0.1, 0, int(throwerMultiplier * basketDistance))
         self.throwerTimer += 1           
 
 
