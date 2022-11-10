@@ -13,6 +13,8 @@ from enum import Enum
 # TODO slightly erode then dilate green pixels
 # TODO use depth when throwing
 # TODO test if robot.orbit works with neg values
+#dist 1950 spd 1250
+#dist 1350 spd 1000
 
 
 class State(Enum):
@@ -30,7 +32,8 @@ class StateMachine:
         self.imageData = 0
         self.imageWidth = 0
         self.imageHeight = 0
-        self.throwIntoBlue = False
+        self.throwIntoBlue = True
+        self.orbitDone = False
         self.rotationSpeedAdjuster = 0
         #self.lastXSpeed = 0
         #self.lastYSpeed = 0
@@ -91,6 +94,9 @@ class StateMachine:
         #adjust Y cap 
         if normalizedYDistanceFromBottom < 0.30 and abs(normalizedXDistanceFromCenter) < 0.1:
             self.robot.stop()
+            if self.orbitDone == True:
+                self.currentState = State.THROW
+                return
             self.currentState = State.ORBIT
             return
         
@@ -142,6 +148,7 @@ class StateMachine:
                 self.robot.stop()
                 if abs(normalizedXDistanceFromCenter) > 0.15 or normalizedYDistanceFromBottom > 0.4:
                     self.currentState = State.GO_TO_BALL
+                    self.orbitDone = True
                     return
                 else:
                     self.currentState = State.THROW
@@ -171,15 +178,19 @@ class StateMachine:
 
         #if already see basket
         if self.throwIntoBlue:
-            if self.imageData.basket_b.exists and self.imageData.basket_b.x > (self.imageWidth / 2):
-                trajectorySpeed = -trajectorySpeed
-                rotSpeed = -rotSpeed
-                rotBase = -rotBase
+            if self.imageData.basket_b.exists:
+                trajectorySpeed = 0.2
+                if self.imageData.basket_b.x > (self.imageWidth / 2):
+                    trajectorySpeed = -trajectorySpeed
+                    rotSpeed = -rotSpeed
+                    rotBase = -rotBase
         else:
-            if self.imageData.basket_m.exists and self.imageData.basket_m.x > (self.imageWidth / 2):
-                trajectorySpeed = -trajectorySpeed
-                rotSpeed = -rotSpeed
-                rotBase = -rotBase
+            if self.imageData.basket_m.exists:
+                trajectorySpeed = 0.2
+                if self.imageData.basket_m.x > (self.imageWidth / 2):
+                    trajectorySpeed = -trajectorySpeed
+                    rotSpeed = -rotSpeed
+                    rotBase = -rotBase
 
         self.robot.move(trajectorySpeed, 0 , rotBase + rotSpeed)
         return
@@ -195,16 +206,27 @@ class StateMachine:
     #use rear wheel correcting and set correct thrower speed
     #i have to know that this state always starts at the same distance from the ball and that the basket is almost in the center
     def throw(self):
+        basketDistance = self.imageData.depth_frame[420][20]
+        throwerMultiplier = 2.1 #1.95
+        throwerSpeed = basketDistance*throwerMultiplier + 300 #390
+        print("distance:")        
+        print(basketDistance)
+        
+        print("speed:")
+        print(throwerSpeed)
+
         if self.throwerTimer == 50:
             self.throwerTimer = 0
             self.currentState = State.FIND_BALL
+            self.orbitDone = False
             self.lastDistance = 0
             return
-        basketDistance = 0
+        if throwerSpeed < 0:
+            throwerSpeed = 1250
+        '''
         if self.lastDistance == 0:
             basketDistance = 0
 
-        throwerMultiplier = 35
         if self.throwIntoBlue:
             if basketDistance != -1:
                 basketDistance = self.imageData.basket_b.distance
@@ -214,9 +236,7 @@ class StateMachine:
                 basketDistance = self.imageData.basket_m.distance
                 self.lastDistance = basketDistance 
 
-        print("distance:")        
-        print(basketDistance)
-        '''
+
         try:
             ballCoords = self.getLargestBallCoords(self.imageData)
             ballXCoord = ballCoords[0]
@@ -230,8 +250,9 @@ class StateMachine:
             rotSpeedMultiplier = 1
             rotSpeed = normalizedXDistanceFromCenter * rotSpeedMultiplier
             self.robot.move(0, 0.1, rotSpeed, throwerMultiplier * basketDistance)
+        
         '''    
-        self.robot.move(0, 0.25, 0, 1250)
+        self.robot.move(0, 0.25, 0, int(throwerSpeed))
         
         #self.robot.move(0, 0.1, 0, int(throwerMultiplier * basketDistance))
         self.throwerTimer += 1           
