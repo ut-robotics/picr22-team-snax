@@ -82,3 +82,9 @@ https://a360.co/3WEcizI
 
 === Monday 2022-11-07
 *All team: * Finishing test robot assembly (3h) +
+
+=== Thursday 2022-11-10
+*Anton: * Mounts for wheels machining (3h) +
+
+=== Friday 2022-11-11
+*Anton: * Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
