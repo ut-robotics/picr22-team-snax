@@ -15,7 +15,6 @@ https://a360.co/3WEcizI
 
 == Blog
 
-
 === Monday 2022-09-26
 
 *Elias:* Soldered adapter for robot battery connector. Worked image processor and compiling new code. (2h) +
@@ -76,15 +75,23 @@ https://a360.co/3WEcizI
 *Markus:* assebling test robot electronics, connecting thrower electronics (1.5h) +
 *Andres:* testing robot on field, implementing orbiting state, image processing (3h) +
 
-=== Sunday 2022-11-04
+=== Sunday 2022-11-06
+
 *Elias:* Testing thrower (2h) +
 *Andres:* Testing thrower (2h) +
 
 === Monday 2022-11-07
-*All team: * Finishing test robot assembly (3h) +
+
+*Whole team:* Finishing test robot assembly (3h) +
+
+=== Wednesday 2022-11-09
+
+*Andres:* Creating orbit and throwing states (4h) +
 
 === Thursday 2022-11-10
-*Anton: * Mounts for wheels machining (3h) +
+
+*Anton:* Mounts for wheels machining (3h) +
 
 === Friday 2022-11-11
-*Anton: * Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
+
+*Anton:* Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
