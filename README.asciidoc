@@ -99,3 +99,7 @@ https://a360.co/3WEcizI
 === Friday 2022-11-11
 
 *Anton:* Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
+
+=== Monday 2022-14-11
+
+*Markus* Started to fix the schematics issues
