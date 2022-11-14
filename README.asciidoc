@@ -84,6 +84,10 @@ https://a360.co/3WEcizI
 
 *Whole team:* Finishing test robot assembly (3h) +
 
+=== Tuesday 2022-11-08
+
+*Andres:* Creating orbit and throwing states (2.5h) +
+
 === Wednesday 2022-11-09
 
 *Andres:* Creating orbit and throwing states (4h) +
