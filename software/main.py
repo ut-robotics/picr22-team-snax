@@ -211,8 +211,28 @@ class StateMachine:
         #dist 2100 spd 1200
         #dist 3250 spd 1450
         #basketDistance = self.imageData.depth_frame[10][420] #420/10
-        averageDist = (self.imageData.depth_frame[self.imageData.basket_b.y][self.imageData.basket_b.x] + self.imageData.depth_frame[self.imageData.basket_b.y+1][self.imageData.basket_b.x-1] + self.imageData.depth_frame[self.imageData.basket_b.y-1][self.imageData.basket_b.x+1])/3
-        basketDistance = averageDist
+        if self.throwIntoBlue == True:
+            basketCenterY = self.imageData.basket_b.y
+            basketCenterX = self.imageData.basket_b.x
+        if self.throwIntoBlue == False:
+            basketCenterY = self.imageData.basket_m.y
+            basketCenterX = self.imageData.basket_m.x
+        
+        
+        def basketDist(x, y):
+            sum = 0
+            i = -1
+            divider = 0
+            while i < 2:
+                j= -1
+                while j < 2:
+                    divider += 1
+                    sum += self.imageData.depth_frame[y+i][x+j]
+                    j += 1
+            answer = round(sum / divider)
+            return answer
+
+        basketDistance = basketDist(basketCenterX, basketCenterY)
         
         throwerMultiplier = 4.26 #2.1 #1.95
         throwerSpeed = round(basketDistance*throwerMultiplier -2943) #300 #390
