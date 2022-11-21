@@ -206,9 +206,16 @@ class StateMachine:
     #use rear wheel correcting and set correct thrower speed
     #i have to know that this state always starts at the same distance from the ball and that the basket is almost in the center
     def throw(self):
-        basketDistance = self.imageData.depth_frame[420][20]
-        throwerMultiplier = 2.1 #1.95
-        throwerSpeed = basketDistance*throwerMultiplier + 300 #390
+        #dist 960 spd 900
+        #dist 1280 spd 1000
+        #dist 2100 spd 1200
+        #dist 3250 spd 1450
+        #basketDistance = self.imageData.depth_frame[10][420] #420/10
+        averageDist = (self.imageData.depth_frame[self.imageData.basket_b.y][self.imageData.basket_b.x] + self.imageData.depth_frame[self.imageData.basket_b.y+1][self.imageData.basket_b.x-1] + self.imageData.depth_frame[self.imageData.basket_b.y-1][self.imageData.basket_b.x+1])/3
+        basketDistance = averageDist
+        
+        throwerMultiplier = 4.26 #2.1 #1.95
+        throwerSpeed = round(basketDistance*throwerMultiplier -2943) #300 #390
         print("distance:")        
         print(basketDistance)
         
@@ -252,7 +259,8 @@ class StateMachine:
             self.robot.move(0, 0.1, rotSpeed, throwerMultiplier * basketDistance)
         
         '''    
-        self.robot.move(0, 0.25, 0, int(throwerSpeed))
+        #self.robot.move(0, 0.25, 0, int(throwerSpeed))
+        self.robot.move(0, 0, 0, int(throwerSpeed))
         
         #self.robot.move(0, 0.1, 0, int(throwerMultiplier * basketDistance))
         self.throwerTimer += 1           
@@ -300,6 +308,7 @@ def main():
                 stateMachine.setState(State.THROW)
             if stateMachine.currentState == State.TESTING:
                 break
+            stateMachine.setState(State.THROW)
 
 
             frame_cnt +=1
