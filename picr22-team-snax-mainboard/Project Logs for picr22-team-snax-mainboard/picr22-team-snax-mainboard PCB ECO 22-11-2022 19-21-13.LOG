@@ -1,0 +1,12 @@
+Added Component: Designator=D3(LED0805B)
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1850746"; VariantName = "[No Variations]"
+Added Component: Designator=D4(LED0805G)
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1716766"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5 Pin=D3-A
+Added Pin To Net: NetName=SGND Pin=D3-K
+Added Pin To Net: NetName=+3.3 Pin=D4-A
+Added Pin To Net: NetName=SGND Pin=D4-K
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component D3 LED-BLUE
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component D4 LED-GREEN

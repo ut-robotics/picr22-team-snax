@@ -1,0 +1,26 @@
+Added Component: Designator=D1(LED0805R)
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1581239"; VariantName = "[No Variations]"
+Added Component: Designator=D2(LED0805R)
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1581239"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found LED0805B
+Add Component: Footprint Not Found LED0805G
+Added Component: Designator=D5(LED0805R)
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "1581239"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+16.8 Pin=D1-A
+Added Pin To Net: NetName=NetD1_K Pin=D1-K
+Added Pin To Net: NetName=+16.8 Pin=D2-A
+Added Pin To Net: NetName=NetD2_K Pin=D2-K
+Add Pin To Net: Unknown Pin: Pin D3-A
+Add Pin To Net: Unknown Pin: Pin D3-K
+Add Pin To Net: Unknown Pin: Pin D4-A
+Add Pin To Net: Unknown Pin: Pin D4-K
+Added Pin To Net: NetName=+16.8 Pin=D5-A
+Added Pin To Net: NetName=NetD5_K Pin=D5-K
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component D1 LED-RED
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component D2 LED-RED
+Add Class Member: Failed to add class member : Component D3 LED-BLUE
+Add Class Member: Failed to add class member : Component D4 LED-GREEN
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component D5 LED-RED
