@@ -107,3 +107,7 @@ https://a360.co/3WEcizI
 === Tuesday 2022-11-15
 
 *Anton:* Omni wheels nicely produced, assembled... are done in other words :3
+
+=== Wednesday 2022-11-23
+
+*Andres:* Created WebSocket client (3h)+
