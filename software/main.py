@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import time
 from enum import Enum
-
 # TODO if too much black around ball, ignore it
 # TODO create config file for constants
 # TODO slightly erode then dilate green pixels
@@ -24,7 +23,6 @@ class State(Enum):
     THROW = 4
     MANUAL = 5
     TESTING = 6
-
 class StateMachine:
     def __init__(self, omniRobot):
         self.currentState = State.FIND_BALL
@@ -32,7 +30,7 @@ class StateMachine:
         self.imageData = 0
         self.imageWidth = 0
         self.imageHeight = 0
-        self.throwIntoBlue = True
+        self.throwIntoBlue = False
         self.orbitDone = False
         self.rotationSpeedAdjuster = 0
         #self.lastXSpeed = 0
@@ -40,7 +38,6 @@ class StateMachine:
         #self.lastXCoord = 0
         self.throwerTimer = 0
         self.lastDistance = 0
-
     def setData(self, data):
         self.imageData = data
         
@@ -56,7 +53,6 @@ class StateMachine:
             self.throw()
         if self.currentState == State.MANUAL:
             pass
-
     #find any ball, slow rotation periodically
     def findBall(self):
         if len(self.imageData.balls) == 0:
@@ -70,12 +66,10 @@ class StateMachine:
                 self.rotationSpeedAdjuster = 0
         else:
             self.currentState = State.GO_TO_BALL
-
     def goToBall(self):
         # TODO cap positive acceleration
         # TODO dont go after balls not in the field
         # TODO if detect black + white line and if ball y is smaller then do 180degrees turn?
-
         try:
             ballCoords = self.getLargestBallCoords(self.imageData)
             ballXCoord = ballCoords[0]
@@ -86,7 +80,6 @@ class StateMachine:
         except:
             self.currentState = State.FIND_BALL
             return
-
         #ball x coord dist from centre [-1, 1], can try different speeds
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageWidth / 2)) / self.imageWidth
         #y is 1 if ball is far away, value [0, 1]
@@ -99,18 +92,15 @@ class StateMachine:
                 return
             self.currentState = State.ORBIT
             return
-        
+
         # TODO calibrate these?
         xSpeedMultiplier = 0.4
         ySpeedMultiplier = 1
         rotSpeedMultiplier = -3
-
         robotXSpeed = normalizedXDistanceFromCenter * xSpeedMultiplier
         robotYSpeed = (normalizedYDistanceFromBottom - 0.2) * ySpeedMultiplier 
         robotRotSpeed = normalizedXDistanceFromCenter * rotSpeedMultiplier
-
         self.robot.move(robotXSpeed, robotYSpeed, robotRotSpeed)
-
     def getLargestBallCoords(self, imageData):
         largestBallX = 0
         largestBallY = 0
@@ -134,15 +124,12 @@ class StateMachine:
             ballCoords = self.getLargestBallCoords(self.imageData)
             ballXCoord = ballCoords[0]
             ballYCoord = ballCoords[1]
-
         except:
             self.currentState = State.FIND_BALL
             return
-
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageWidth / 2)) / self.imageWidth
         basketMaxDistanceFromCenter = 20 #in pixels
-
         if self.throwIntoBlue:
             if abs(self.imageData.basket_b.x - self.imageWidth / 2) < basketMaxDistanceFromCenter:
                 self.robot.stop()
@@ -163,17 +150,13 @@ class StateMachine:
                 else:
                     self.currentState = State.THROW
                     self.robot.stop()
-
                     return
-
         trajectorySpeed = 0.3
         rotSpeedMultiplier = -4
         ySpeedMultiplier = 0.8
         
         ySpeed = -(0.3 - normalizedYDistanceFromBottom) * ySpeedMultiplier
-
         rotSpeed = normalizedXDistanceFromCenter * rotSpeedMultiplier
-
         rotBase = 0.3
 
         #if already see basket
@@ -194,7 +177,6 @@ class StateMachine:
 
         self.robot.move(trajectorySpeed, 0 , rotBase + rotSpeed)
         return
-
         '''
         baselineTrajectorySpeed = 0.2
         #if radius is negative, should just orbit the other way around
@@ -202,9 +184,22 @@ class StateMachine:
         #if basket is centered enough
         self.robot.orbit(baselineTrajectorySpeed, baselineRadius)
         '''
-
     #use rear wheel correcting and set correct thrower speed
     #i have to know that this state always starts at the same distance from the ball and that the basket is almost in the center
+    def basketDist(self, x, y):
+        sum = 0
+        i = -1
+        divider = 0
+        while i < 2:
+            j= -1
+            while j < 2:
+                divider += 1
+                sum += self.imageData.depth_frame[y+i][x+j]
+                j += 1
+            i += 1
+        answer = round(sum / divider)
+        return answer
+
     def throw(self):
         #dist 960 spd 900
         #dist 1280 spd 1000
@@ -219,30 +214,18 @@ class StateMachine:
             basketCenterX = self.imageData.basket_m.x
         
         
-        def basketDist(x, y):
-            sum = 0
-            i = -1
-            divider = 0
-            while i < 2:
-                j= -1
-                while j < 2:
-                    divider += 1
-                    sum += self.imageData.depth_frame[y+i][x+j]
-                    j += 1
-            answer = round(sum / divider)
-            return answer
 
-        basketDistance = basketDist(basketCenterX, basketCenterY)
+        basketDistance = self.basketDist(basketCenterX, basketCenterY)
         
-        throwerMultiplier = 4.26 #2.1 #1.95
-        throwerSpeed = round(basketDistance*throwerMultiplier -2943) #300 #390
+        throwerMultiplier = 0.245#0.247 #0.234 #2.1 #1.95
+        throwerSpeed = round(basketDistance*throwerMultiplier +610) #695 #685 #300 #390
         print("distance:")        
         print(basketDistance)
         
         print("speed:")
         print(throwerSpeed)
 
-        if self.throwerTimer == 50:
+        if self.throwerTimer >= 30:
             self.throwerTimer = 0
             self.currentState = State.FIND_BALL
             self.orbitDone = False
@@ -280,17 +263,15 @@ class StateMachine:
         
         '''    
         #self.robot.move(0, 0.25, 0, int(throwerSpeed))
-        self.robot.move(0, 0, 0, int(throwerSpeed))
+        self.robot.move(0, 0.25, 0, int(throwerSpeed))
         
         #self.robot.move(0, 0.1, 0, int(throwerMultiplier * basketDistance))
         self.throwerTimer += 1           
-
-
+ 
  
 # TODO: RUN COLOR CONFIGURATOR
 def main():
     debug = True
-
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
     processor = image_processor.ImageProcessor(cam, debug=debug)
@@ -300,7 +281,6 @@ def main():
     stateMachine = StateMachine(omniRobot)
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
-
     start = time.time()
     fps = 0
     frame = 0
@@ -315,6 +295,8 @@ def main():
             stateMachine.setData(processedData)
             useDepthImage = False
 
+            #stateMachine.setState(State.TESTING)
+
             # This is where you add the driving behaviour of your robot. It should be able to filter out
             # objects of interest and calculate the required motion for reaching the objects
             if stateMachine.currentState == State.FIND_BALL:
@@ -327,8 +309,8 @@ def main():
                 useDepthImage = True
                 stateMachine.setState(State.THROW)
             if stateMachine.currentState == State.TESTING:
-                break
-            stateMachine.setState(State.THROW)
+                stateMachine.setState(State.THROW)
+            
 
 
             frame_cnt +=1
