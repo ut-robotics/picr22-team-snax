@@ -7,6 +7,8 @@ import cv2
 import numpy as np
 import time
 from enum import Enum
+import referee
+
 # TODO if too much black around ball, ignore it
 # TODO create config file for constants
 # TODO slightly erode then dilate green pixels
@@ -23,6 +25,8 @@ class State(Enum):
     THROW = 4
     MANUAL = 5
     TESTING = 6
+    WAIT_REFEREE = 7
+
 class StateMachine:
     def __init__(self, omniRobot):
         self.currentState = State.FIND_BALL
@@ -53,6 +57,9 @@ class StateMachine:
             self.throw()
         if self.currentState == State.MANUAL:
             pass
+        if self.currentState == State.WAIT_REFEREE:
+            self.robot.stop()
+
     #find any ball, slow rotation periodically
     def findBall(self):
         if len(self.imageData.balls) == 0:
@@ -128,6 +135,9 @@ class StateMachine:
             self.currentState = State.FIND_BALL
             return
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
+        if normalizedYDistanceFromBottom > 0.6:
+            self.currentState = State.FIND_BALL
+            return
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageWidth / 2)) / self.imageWidth
         basketMaxDistanceFromCenter = 20 #in pixels
         if self.throwIntoBlue:
@@ -212,8 +222,6 @@ class StateMachine:
         if self.throwIntoBlue == False:
             basketCenterY = self.imageData.basket_m.y
             basketCenterX = self.imageData.basket_m.x
-        
-        
 
         basketDistance = self.basketDist(basketCenterX, basketCenterY)
         
@@ -271,6 +279,8 @@ class StateMachine:
  
 # TODO: RUN COLOR CONFIGURATOR
 def main():
+    competition = True
+
     debug = True
     # camera instance for realsense cameras
     cam = camera.RealsenseCamera(exposure = 100)
@@ -279,6 +289,11 @@ def main():
     
     omniRobot = motion.OmniMotionRobot()
     stateMachine = StateMachine(omniRobot)
+    if competition:
+        robotReferee = referee.Referee(ip="192.168.3.220")
+        robotReferee.startReferee()
+        stateMachine.setState(State.WAIT_REFEREE)
+
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
     start = time.time()
@@ -289,6 +304,19 @@ def main():
     frame_cnt = 0
     try:
         while True:
+            cmd = robotReferee.getCommand()
+            if (cmd != None):
+                print("COMMAND IN")
+                print(cmd)
+                if cmd[0] == 'START':
+                    stateMachine.currentState = State.FIND_BALL
+                    if cmd[1] == 'blue':
+                        stateMachine.throwIntoBlue = True
+                    else:
+                        stateMachine.throwIntoBlue = False
+
+                elif cmd[0] == 'STOP':
+                    stateMachine.currentState = State.WAIT_REFEREE
             # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
             processedData = processor.process_frame(aligned_depth=useDepthImage)
             #updating state machine data
@@ -310,6 +338,8 @@ def main():
                 stateMachine.setState(State.THROW)
             if stateMachine.currentState == State.TESTING:
                 stateMachine.setState(State.THROW)
+            if stateMachine.currentState == State.WAIT_REFEREE:
+                stateMachine.setState(State.WAIT_REFEREE)
             
 
 
@@ -344,10 +374,12 @@ def main():
 
     except KeyboardInterrupt:
         print("closing...")
+        robotReferee.disconnect()
 
     finally:
         cv2.destroyAllWindows()
         processor.stop()
+
 
 if __name__ == '__main__':
     main()
