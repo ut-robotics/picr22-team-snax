@@ -3,11 +3,10 @@ import time
 import json
 import multiprocessing
 
-
 class Referee:
     def __init__(self, ip, robotName = "snax"):
         self.robotName = robotName
-        self.serverURL = "ws://" + ip + ":8111"   #":8111"
+        self.serverURL = "ws://" + ip + ":8111"
         self.ws = websocket.WebSocket()
         self.commands = multiprocessing.Queue()
 
@@ -27,6 +26,8 @@ class Referee:
         while True:
             try:
                 command = self.ws.recv()
+            
+            #reconnecting
             except:
                 if self.connect():
                     continue
