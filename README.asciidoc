@@ -102,7 +102,7 @@ https://a360.co/3WEcizI
 
 === Monday 2022-14-11
 
-*Markus* Started to fix the schematics issues
+*Markus:* Started to fix the schematics issues
 
 === Tuesday 2022-11-15
 
@@ -110,13 +110,13 @@ https://a360.co/3WEcizI
 
 === Wednesday 2022-11-23
 
-*Andres:* Created WebSocket client (3h)+
+*Andres:* Created WebSocket client (3h) +
 
 === Thursday 2022-11-24
 
-*Elias:* Participating in test competition (3h)+
-
-*Andres:* Participating in test competition (3h)+
+*Elias:* Participating in test competition (3h) +
+*Andres:* Participating in test competition (3h) +
 
 === Sunday 2022-11-27
+
 *Andres:* Code refactoring (1.5h)+
