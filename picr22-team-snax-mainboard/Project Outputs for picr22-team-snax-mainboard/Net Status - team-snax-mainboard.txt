@@ -1,0 +1,62 @@
+Net Status Report
+Filename     : C:\Users\Talha\Downloads\fiver order\order27\altium file\picr22-team-snax\picr22-team-snax-mainboard\team-snax-mainboard.PcbDoc
+Date         : 11/29/2022
+Time         : 12:15:12 AM
+Time Elapsed : 00:00:00
+
+Nets, Layer, Length
+    +16.8, Signal Layers Only, 200.188mm
+    +3.3, Signal Layers Only, 310.898mm
+    +5, Signal Layers Only, 299.4988mm
+    Bat-, Signal Layers Only, 462.1187mm
+    DIR_M1, Signal Layers Only, 98.9703mm
+    DIR_M1_OUT, Signal Layers Only, 53.2751mm
+    DIR_M2, Signal Layers Only, 41.6553mm
+    DIR_M2_OUT, Signal Layers Only, 7.9449mm
+    DIR_M3, Signal Layers Only, 44.6602mm
+    DIR_M3_OUT, Signal Layers Only, 9.0027mm
+    DRV_OFF, Signal Layers Only, 25.2645mm
+    DRV_OFF_OUT, Signal Layers Only, 94.782mm
+    NRST, Signal Layers Only, 23.2128mm
+    NetC14_1, Signal Layers Only, 57.6876mm
+    NetC33_1, Signal Layers Only, 3.3889mm
+    NetC33_2, Signal Layers Only, 4.0999mm
+    NetC36_1, Signal Layers Only, 27.4957mm
+    NetJ10_1, Signal Layers Only, 19.0626mm
+    NetJ11_1, Signal Layers Only, 19.4096mm
+    NetJ13_1, Signal Layers Only, 30.9958mm
+    NetJ14_1, Signal Layers Only, 28.8716mm
+    NetJ2_1, Signal Layers Only, 25.4568mm
+    NetJ7_1, Signal Layers Only, 31.1315mm
+    NetJ8_1, Signal Layers Only, 29.959mm
+    NetR10_1, Signal Layers Only, 34.4437mm
+    NetR11_1, Signal Layers Only, 33.6658mm
+    NetR1_1, Signal Layers Only, 45.9377mm
+    NetR3_1, Signal Layers Only, 13.1072mm
+    NetR4_2, Signal Layers Only, 40.7784mm
+    NetR5_1, Signal Layers Only, 31.9031mm
+    NetR6_1, Signal Layers Only, 6.2348mm
+    PWM_M1, Signal Layers Only, 62.7571mm
+    PWM_M1_OUT, Signal Layers Only, 71.4697mm
+    PWM_M2, Signal Layers Only, 39.5128mm
+    PWM_M2_OUT, Signal Layers Only, 7.4231mm
+    PWM_M3, Signal Layers Only, 41.2714mm
+    PWM_M3_OUT, Signal Layers Only, 9.6043mm
+    PWM_THROWER, Signal Layers Only, 62.4072mm
+    PWM_THROWER_OUT, Signal Layers Only, 61.0998mm
+    SERVO_M1, Signal Layers Only, 31.4742mm
+    SERVO_M1_OUT, Signal Layers Only, 62.6914mm
+    SGND, Signal Layers Only, 302.522mm
+    SWCLK, Signal Layers Only, 43.1052mm
+    SWDIO, Signal Layers Only, 19.7164mm
+    TIM1_CH1, Signal Layers Only, 46.7493mm
+    TIM1_CH2, Signal Layers Only, 45.6298mm
+    TIM3_CH1, Signal Layers Only, 42.8138mm
+    TIM3_CH2, Signal Layers Only, 42.8917mm
+    TIM4_CH1, Signal Layers Only, 60.3735mm
+    TIM4_CH2, Signal Layers Only, 64.2314mm
+    USB_DM, Signal Layers Only, 63.1266mm
+    USB_DP, Signal Layers Only, 77.3386mm
+    nSLEEP_MCU, Signal Layers Only, 60.1358mm
+    nSLEEP_MCU_OUT, Signal Layers Only, 76.6683mm
+count : 54
