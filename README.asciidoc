@@ -95,21 +95,33 @@ https://a360.co/3WEcizI
 === Thursday 2022-11-10
 
 *Anton:* Mounts for wheels machining (3h) +
+*Andres:* Trying to qualify for the competition and fixing throw state (3h) +
+*Elias:* Trying to qualify for the competition and fixing throw state (3h) +
 
 === Friday 2022-11-11
 
 *Anton:* Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
 
-=== Monday 2022-14-11
+=== Monday 2022-11-14
 
 *Markus:* Started to fix the schematics issues
+*Elias:* Thrower data points (3h) +
 
 === Tuesday 2022-11-15
 
 *Anton:* Omni wheels nicely produced, assembled... are done in other words :3
 
+=== Thrusday 2022-11-17
+
+*Elias:* Fixing thrower distance data (2h) +
+
+=== Monday 2022-11-21
+
+*Elias:* Fixing thrower distance data (2h) +
+
 === Wednesday 2022-11-23
 
+*Elias:* Thrower calculations finished (2h) +
 *Andres:* Created WebSocket client (3h) +
 
 === Thursday 2022-11-24
