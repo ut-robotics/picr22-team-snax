@@ -116,7 +116,9 @@ https://a360.co/3WEcizI
 
 *Elias:* Participating in test competition (3h) +
 *Andres:* Participating in test competition (3h) +
+*Markus:*: Fixed PCB schematics (4h) +
 
 === Sunday 2022-11-27
 
 *Andres:* Code refactoring (1.5h)+
+*Markus:* Designing PCB (6h)
