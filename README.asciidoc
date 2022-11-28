@@ -104,7 +104,7 @@ https://a360.co/3WEcizI
 
 === Monday 2022-11-14
 
-*Markus:* Started to fix the schematics issues
+*Markus:* Started to fix the schematics issues +
 *Elias:* Thrower data points (3h) +
 
 === Tuesday 2022-11-15
