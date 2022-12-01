@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=+16.8 Pin=Q1-1
+Removed Pin From Net: NetName=Bat- Pin=Q1-4
+Change Component Footprint: Designator=R2 Old Footprint=RES_0603 New Footprint=RES_0805
+Change Component Footprint: Designator=R7 Old Footprint=RES_0603 New Footprint=RES_0805
+Change Component Comment : Designator=R2 Old Comment=100k 0603 New Comment=100k 0805
+Change Component Comment : Designator=R7 Old Comment=100k 0603 New Comment=100k 0805
+Change Component Designator: OldDesignator=J5 NewDesignator=2
+Added Pin To Net: NetName=Bat- Pin=Q1-1
+Added Pin To Net: NetName=+16.8 Pin=Q1-4
+Added Pin To Net: NetName=DRV_OFF_OUT Pin=U3-13
+Added Pin To Net: NetName=DRV_OFF_OUT Pin=U5-13
+Added Pin To Net: NetName=DRV_OFF_OUT Pin=U8-13
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component J12 Bat-
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component R9 100k 0603
