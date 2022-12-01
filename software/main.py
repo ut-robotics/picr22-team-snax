@@ -279,7 +279,7 @@ class StateMachine:
  
 # TODO: RUN COLOR CONFIGURATOR
 def main():
-    competition = True
+    competition = False
 
     debug = True
     # camera instance for realsense cameras
@@ -304,19 +304,20 @@ def main():
     frame_cnt = 0
     try:
         while True:
-            cmd = robotReferee.getCommand()
-            if (cmd != None):
-                print("COMMAND IN")
-                print(cmd)
-                if cmd[0] == 'START':
-                    stateMachine.currentState = State.FIND_BALL
-                    if cmd[1] == 'blue':
-                        stateMachine.throwIntoBlue = True
-                    else:
-                        stateMachine.throwIntoBlue = False
+            if competition:
+                cmd = robotReferee.getCommand()
+                if (cmd != None):
+                    print("COMMAND IN")
+                    print(cmd)
+                    if cmd[0] == 'START':
+                        stateMachine.currentState = State.FIND_BALL 
+                        if cmd[1] == 'blue':
+                            stateMachine.throwIntoBlue = True
+                        else:
+                            stateMachine.throwIntoBlue = False
 
-                elif cmd[0] == 'STOP':
-                    stateMachine.currentState = State.WAIT_REFEREE
+                    elif cmd[0] == 'STOP':
+                        stateMachine.currentState = State.WAIT_REFEREE
             # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
             processedData = processor.process_frame(aligned_depth=useDepthImage)
             #updating state machine data
