@@ -8,21 +8,19 @@ import os
 class OmniMotionRobot:
     def __init__(self):
         #data about robot and motors
-        #wheelAngles order = rear, left, right
+        #wheelAngles_order = rear, left, right
         self.wheelAngles = [0, 240, 120]
         self.gearboxReductionRatio = 18.75
         self.encoderEdgesPerMotorRevolution = 64
-        #perhaps correct this
         self.wheelRadius = 0.035
         self.pidControlFrecuency = 100
-        #perhaps correct this
         self.wheelDistanceFromCenter = 0.15
-        #should get right port
+        #get right port
         self.robotSerialDevice = os.popen("python3.9 -m serial.tools.list_ports").read().split()[0]
         #calculations for sending movement data
         self.wheelSpeedToMainboardUnits = self.gearboxReductionRatio * self.encoderEdgesPerMotorRevolution / (2*3.141528 * self.wheelRadius * self.pidControlFrecuency)
 
-    #sends struct data to mainboard
+    #sends data struct to mainboard
     def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
         ser = serial.Serial(self.robotSerialDevice, 115200)
         movementCommand = struct.pack('<hhhHBH', int(rightSpeed), int(rearSpeed), int(leftSpeed), int(throwerSpeed), True, 0xAAAA)
@@ -30,7 +28,7 @@ class OmniMotionRobot:
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
     def move(self, xSpeed, ySpeed, rotSpeed, throwerSpeed = 0):
-        
+
         #degrees are counted from the right counterclockwise
         #arctangent
         robotDirection = np.degrees(math.atan2(ySpeed, xSpeed))
@@ -38,7 +36,6 @@ class OmniMotionRobot:
         robotSpeed = math.sqrt((xSpeed ** 2) + (ySpeed ** 2))
         wheelLinearVelocities = [0,0,0]
 
-        # TODO: do this when implementing turning, not sure if correct
         robotAngularVelocity = rotSpeed
 
         #calculate wheelLinearVelocities
@@ -53,7 +50,6 @@ class OmniMotionRobot:
 
         self.serialCommunication(int(wheelAngularSpeedInMainboardUnits[0]), int(wheelAngularSpeedInMainboardUnits[1]), int(wheelAngularSpeedInMainboardUnits[2]), int(throwerSpeed))
 
-    # TODO: test this
     #orbit movement around point to find basket
     #positive orbit speed is orbiting orbiting counterclockwise if viewed from above
     def orbit(self, orbitSpeed, orbitRadius):
@@ -64,8 +60,6 @@ class OmniMotionRobot:
         #move along x-axis and rotate
         self.move(orbitSpeed, 0, rotationalSpeed)
     
-    # TODO: write special movement function to use when approaching ball that uses only rear wheel to adjust direction 
-
     #stop movement
     def stop(self):
         self.move(0, 0, 0)
@@ -102,5 +96,3 @@ if __name__ == '__main__':
         omniRobot.testMotors()
     finally:
         omniRobot.stop()
-    #omniRobot.move(0,1,0)
-    #omniRobot.serialCommunication(0,0,0,0)
