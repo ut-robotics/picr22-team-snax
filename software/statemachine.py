@@ -151,8 +151,9 @@ class StateMachine:
         ySpeed = -(0.3 - normalizedYDistanceFromBottom) * ySpeedMultiplier
         
         rotBase = 0.3
-        rotSpeed = rotBase + normalizedXDistanceFromCenter * rotSpeedMultiplier
         rotSpeedMultiplier = -4
+        rotSpeed = rotBase + normalizedXDistanceFromCenter * rotSpeedMultiplier
+        
         
 
         #if already see basket
@@ -179,7 +180,7 @@ class StateMachine:
         for i in range(-1, 2):
             for j in range(-1, 2):
                 distanceSum += self.imageData.depth_frame[y+i][x+j]
-        basketDistance = int(distanceSum / divider)
+        basketDistance = int(distanceSum / 9)
         return basketDistance
 
     def throw(self):

@@ -14,10 +14,11 @@ import referee
 # TODO slightly erode then dilate green pixels???
 # TODO improve robot.orbit 
 
+
 def main():
     #---------
     #config
-    competition = True
+    competition = False
     debug = True
     #---------
 
@@ -26,14 +27,14 @@ def main():
     processor.start()
     
     omniRobot = motion.OmniMotionRobot()
-    stateMachine = StateMachine(omniRobot)
+    stateMachine = statemachine.StateMachine(omniRobot)
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
 
     if competition:
         robotReferee = referee.Referee(ip="192.168.3.220")
         robotReferee.startReferee()
-        stateMachine.setState(State.WAIT_REFEREE)
+        stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
     start = time.time()
     fps = 0
@@ -48,14 +49,14 @@ def main():
                 cmd = robotReferee.getCommand()
                 if (cmd != None):
                     if cmd[0] == 'START':
-                        stateMachine.currentState = State.FIND_BALL
+                        stateMachine.currentState = statemachine.State.FIND_BALL
                         if cmd[1] == 'blue':
                             stateMachine.throwIntoBlue = True
                         else:
                             stateMachine.throwIntoBlue = False
 
                     elif cmd[0] == 'STOP':
-                        stateMachine.currentState = State.WAIT_REFEREE
+                        stateMachine.currentState = statemachine.State.WAIT_REFEREE
             
             
             # has argument aligned_depth that enables depth frame to color frame alignment. Costs performance
@@ -65,19 +66,19 @@ def main():
 
             useDepthImage = False
 
-            if stateMachine.currentState == State.FIND_BALL:
-                stateMachine.setState(State.FIND_BALL)
-            if stateMachine.currentState == State.GO_TO_BALL:
-                stateMachine.setState(State.GO_TO_BALL) 
-            if stateMachine.currentState == State.ORBIT:
-                stateMachine.setState(State.ORBIT)
-            if stateMachine.currentState == State.THROW:
+            if stateMachine.currentState == statemachine.State.FIND_BALL:
+                stateMachine.setState(statemachine.State.FIND_BALL)
+            if stateMachine.currentState == statemachine.State.GO_TO_BALL:
+                stateMachine.setState(statemachine.State.GO_TO_BALL) 
+            if stateMachine.currentState == statemachine.State.ORBIT:
+                stateMachine.setState(statemachine.State.ORBIT)
+            if stateMachine.currentState == statemachine.State.THROW:
                 useDepthImage = True
-                stateMachine.setState(State.THROW)
-            if stateMachine.currentState == State.TESTING:
-                stateMachine.setState(State.THROW)
-            if stateMachine.currentState == State.WAIT_REFEREE:
-                stateMachine.setState(State.WAIT_REFEREE)
+                stateMachine.setState(statemachine.State.THROW)
+            if stateMachine.currentState == statemachine.State.TESTING:
+                stateMachine.setState(statemachine.State.THROW)
+            if stateMachine.currentState == statemachine.State.WAIT_REFEREE:
+                stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
             frame_cnt +=1
             frame += 1
@@ -112,10 +113,10 @@ def main():
         print("closing...")
 
     finally:
-        robotReferee.disconnect()
+        if competition:
+            robotReferee.disconnect()
         cv2.destroyAllWindows()
         processor.stop()
-
 
 if __name__ == '__main__':
     main()
