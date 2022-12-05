@@ -86,7 +86,53 @@ class ImageProcessor():
 
             # ball filtering logic goes here. Example includes filtering by size and an example how to get pixels from
             # the bottom center of the fram to the ball
+            
+            
+            ####### UUUUS KOOOO
+            ####### UUUUS KOOOO
+            ####### UUUUS KOOOO
+            ####### UUUUS KOOOO
+            
 
+            
+            def detect_line(x, y):
+                counter = 10
+                true_counter = 0
+                y_height = len(self.color_frame[x])
+                while y > 0:
+                    
+                    
+                    if self.color_frame[x][y] == c.Color.BLACK.color.tolist():
+                        while True:
+                            if self.color_frame[x][y] == c.Color.BLACK.color.tolist():
+                                true_counter += 1
+                                if true_counter > 10 and self.color_frame[x][y] == c.Color.WHITE.color.tolist():
+                                    break
+                            elif y >= y_height:
+                                return False
+                            else:
+                                true_counter = 0
+                                continue
+                            y -= 1                
+                        while True:
+                            if self.color_frame[x][y] == c.Color.WHITE.color.tolist():
+                                true_counter += 1
+                                if true_counter > 10:
+                                    return True
+                            elif y >= y_height:
+                                return False
+                            else:
+                                true_counter = 0
+                                continue
+                            y -= 1
+                
+                ####### UUUUS KOOOO
+                ####### UUUUS KOOOO
+                ####### UUUUS KOOOO
+                            
+                        
+                    y -= 1
+                    
             size = cv2.contourArea(contour)
 
             if size < 15:
@@ -105,7 +151,8 @@ class ImageProcessor():
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
 
-            balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
+            if detect_line(obj_x, obj_y) == False:
+                balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)
 
