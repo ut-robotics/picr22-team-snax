@@ -48,6 +48,56 @@ Used DCodes :
     D44
     D45
     D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+*************************************************************
+
+*************************************************************
+Generating : GND 1
+      File : team-snax-mainboard_Copper_Signal_1.gbr
+
+    Adding Layer      : GND 1
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+*************************************************************
+
+*************************************************************
+Generating : GND 2
+      File : team-snax-mainboard_Copper_Signal_2.gbr
+
+    Adding Layer      : GND 2
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
 *************************************************************
 
 *************************************************************
@@ -60,120 +110,22 @@ Generating : Bottom Layer
 
 
 Used DCodes :
-    D14
-    D20
-    D37
-    D39
-    D42
+    D10
+    D18
+    D33
     D43
-    D44
     D45
     D46
     D47
     D48
-*************************************************************
-
-*************************************************************
-Generating : Bottom Pad Master
-      File : team-snax-mainboard_Pads_Bot.gbr
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D14
-    D20
-    D37
-    D39
-    D42
-    D43
-    D44
-    D45
-    D47
-*************************************************************
-
-*************************************************************
-Generating : Top Pad Master
-      File : team-snax-mainboard_Pads_Top.gbr
-
-    Adding Layer      : Top Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-    D14
-    D15
-    D16
-    D17
-    D18
-    D19
-    D20
-    D21
-    D22
-    D23
-    D24
-    D25
-    D26
-    D27
-    D28
-    D29
-    D30
-    D31
-    D32
-    D33
-    D34
-    D35
-    D36
-    D37
-    D38
-    D39
-    D42
-    D43
-    D44
-    D45
-*************************************************************
-
-*************************************************************
-Generating : Bottom Overlay
-      File : team-snax-mainboard_Legend_Bot.gbr
-
-    Adding Layer      : Bottom Overlay
-
-
-Used DCodes :
     D49
     D50
-*************************************************************
-
-*************************************************************
-Generating : Bottom Solder
-      File : team-snax-mainboard_Soldermask_Bot.gbr
-
-    Adding Layer      : Bottom Solder
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
     D51
     D52
     D53
     D54
     D55
     D56
-    D57
-    D58
-    D59
-    D60
 *************************************************************
 
 *************************************************************
@@ -188,11 +140,44 @@ Generating : Bottom Paste
 
 
 Used DCodes :
-    D14
-    D20
-    D37
-    D39
-    D47
+    D18
+    D33
+    D55
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : team-snax-mainboard_Legend_Bot.gbr
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D57
+    D58
+    D59
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : team-snax-mainboard_Soldermask_Bot.gbr
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
 *************************************************************
 
 *************************************************************
@@ -203,15 +188,15 @@ Generating : Top Overlay
 
 
 Used DCodes :
-    D49
-    D50
-    D61
-    D62
-    D63
-    D64
-    D65
-    D66
-    D67
+    D57
+    D58
+    D59
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
 *************************************************************
 
 *************************************************************
@@ -226,7 +211,6 @@ Generating : Top Paste
 
 
 Used DCodes :
-    D10
     D11
     D12
     D13
@@ -235,12 +219,9 @@ Used DCodes :
     D16
     D17
     D18
-    D19
     D20
     D21
-    D22
-    D23
-    D24
+    D25
     D28
     D29
     D30
@@ -251,8 +232,10 @@ Used DCodes :
     D35
     D36
     D37
-    D38
     D39
+    D40
+    D41
+    D42
 *************************************************************
 
 *************************************************************
@@ -267,24 +250,16 @@ Generating : Top Solder
 
 
 Used DCodes :
-    D16
-    D17
-    D18
-    D51
-    D53
-    D54
-    D55
-    D56
-    D57
-    D58
-    D59
-    D60
-    D68
-    D69
-    D70
-    D71
-    D72
-    D73
+    D35
+    D36
+    D37
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
     D74
     D75
     D76
@@ -297,140 +272,11 @@ Used DCodes :
     D83
     D84
     D85
-*************************************************************
-
-*************************************************************
-Generating : Keep-Out Layer
-      File : team-snax-mainboard_Keep-out.gbr
-
-    Adding Layer      : Keep-Out Layer
-
-
-Used DCodes :
-*************************************************************
-
-*************************************************************
-Generating : Mechanical 13
-      File : team-snax-mainboard_Mechanical_13.gbr
-
-    Adding Layer      : Mechanical 13
-
-
-Used DCodes :
-    D61
-    D64
-    D65
-    D66
-    D67
-*************************************************************
-
-*************************************************************
-Generating : Bottom Component Center
-      File : team-snax-mainboard_Mechanical_24.gbr
-
-    Adding Layer      : Bottom Component Center
-
-
-Used DCodes :
-*************************************************************
-
-*************************************************************
-Generating : Bottom Courtyard
-      File : team-snax-mainboard_Mechanical_21.gbr
-
-    Adding Layer      : Bottom Courtyard
-
-
-Used DCodes :
-*************************************************************
-
-*************************************************************
-Generating : Bottom Assembly
-      File : team-snax-mainboard_Mechanical_20.gbr
-
-    Adding Layer      : Bottom Assembly
-
-
-Used DCodes :
-*************************************************************
-
-*************************************************************
-Generating : Top 3D Body
-      File : team-snax-mainboard_Mechanical_2.gbr
-
-    Adding Layer      : Top 3D Body
-
-
-Used DCodes :
-    D61
-*************************************************************
-
-*************************************************************
-Generating : Top Assembly
-      File : team-snax-mainboard_Mechanical_5.gbr
-
-    Adding Layer      : Top Assembly
-
-
-Used DCodes :
-    D61
-    D64
     D86
-*************************************************************
-
-*************************************************************
-Generating : Top Component Center
-      File : team-snax-mainboard_Mechanical_16.gbr
-
-    Adding Layer      : Top Component Center
-
-
-Used DCodes :
-    D64
-*************************************************************
-
-*************************************************************
-Generating : Mechanical 1
-      File : team-snax-mainboard_Mechanical_1.gbr
-
-    Adding Layer      : Mechanical 1
-
-
-Used DCodes :
-    D64
-*************************************************************
-
-*************************************************************
-Generating : Top Courtyard
-      File : team-snax-mainboard_Mechanical_3.gbr
-
-    Adding Layer      : Top Courtyard
-
-
-Used DCodes :
-    D61
-*************************************************************
-
-*************************************************************
-Generating : Bottom 3D Body
-      File : team-snax-mainboard_Mechanical_23.gbr
-
-    Adding Layer      : Bottom 3D Body
-
-
-Used DCodes :
-*************************************************************
-
-*************************************************************
-Generating : Mechanical 15
-      File : team-snax-mainboard_Mechanical_15.gbr
-
-    Adding Layer      : Mechanical 15
-
-
-Used DCodes :
-    D64
-    D86
+    D87
+    D88
+    D89
+    D90
 *************************************************************
 
 *************************************************************
@@ -439,6 +285,31 @@ Generating : Profile
 
 
 Used DCodes :
-    D87
+    D91
+*************************************************************
+
+*************************************************************
+Generating : Non-plated through-hole drill file
+      File : team-snax-mainboard_NPTH_Drill.gbr
+
+
+Used DCodes :
+    D92
+    D93
+    D94
+    D95
+*************************************************************
+
+*************************************************************
+Generating : Plated through-hole drill file
+      File : team-snax-mainboard_PTH_Drill.gbr
+
+
+Used DCodes :
+    D96
+    D97
+    D98
+    D99
+    D100
 *************************************************************
 
