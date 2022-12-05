@@ -1039,7 +1039,7 @@ UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Library Name And Type
-ComponentLibraryIdentifier0=MotorDriver.SCHLIB
+ComponentLibraryIdentifier0=MotorDriver.IntLib
 ComponentDesignItemID0=NCV8730ASN500T1G
 ComponentSymbolReference0=NCV8730ASN500T1G
 ComponentUpdate0=1
@@ -1068,7 +1068,7 @@ ParameterUpdate3=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=SOP95P250X265-6N
+ModelName0=SOP95P275X110-6N
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]
