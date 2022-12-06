@@ -114,23 +114,40 @@ https://a360.co/3WEcizI
 === Thrusday 2022-11-17
 
 *Elias:* Fixing thrower distance data (2h) +
+*Anton:* Bottom part desing completed (2h)+
 
 === Monday 2022-11-21
 
 *Elias:* Fixing thrower distance data (2h) +
+*Anton:* Motor mount desing completed (2h)+
 
 === Wednesday 2022-11-23
 
 *Elias:* Thrower calculations finished (2h) +
 *Andres:* Created WebSocket client (3h) +
+*Anton:* Camera holder desing completed (2h)+
 
 === Thursday 2022-11-24
 
 *Elias:* Participating in test competition (3h) +
 *Andres:* Participating in test competition (3h) +
+*Anton:* Upper plate desing completed (2h)+
 *Markus:*: Fixed PCB schematics (4h) +
 
 === Sunday 2022-11-27
 
 *Andres:* Code refactoring (1.5h)+
+*Anton:* Whole new robot design completed (2h)+
 *Markus:* Designing PCB (6h)
+
+=== Thursday 2022-12-01
+
+*Anton:* Whole new robot design issues solving (6h)+
+
+=== Monday 2022-12-05
+
+*Anton:* CAM completed, whole new robot fabricated (8h)+
+
+=== Monday 2022-12-06
+
+*Anton:* New robot assembling finished (3h)+
