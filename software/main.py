@@ -14,7 +14,6 @@ import referee
 # TODO slightly erode then dilate green pixels???
 # TODO improve robot.orbit 
 
-
 def main():
     #---------
     #config

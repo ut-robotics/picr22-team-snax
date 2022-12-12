@@ -32,7 +32,6 @@ class ProcessedResults():
                 fragmented = [],
                 debug_frame = []) -> None:
 
-
         self.balls = balls
         self.basket_b = basket_b
         self.basket_m = basket_m
@@ -88,13 +87,9 @@ class ImageProcessor():
             # the bottom center of the fram to the ball
             
             
-            ####### UUUUS KOOOO
-            ####### UUUUS KOOOO
-            ####### UUUUS KOOOO
-            ####### UUUUS KOOOO
-            
+           
 
-            
+            '''
             def detect_line(x, y):
                 counter = 10
                 true_counter = 0
@@ -132,7 +127,7 @@ class ImageProcessor():
                             
                         
                     y -= 1
-                    
+            '''        
             size = cv2.contourArea(contour)
 
             if size < 15:
@@ -150,8 +145,11 @@ class ImageProcessor():
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
-
+            '''
             if detect_line(obj_x, obj_y) == False:
+            '''
+            #ignore noise not on the field
+            if obj_y > 80:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)
