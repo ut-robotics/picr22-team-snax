@@ -179,19 +179,19 @@ https://a360.co/3WEcizI
 
 === Sunday 2022-12-04
 
-*Markus:* PCB designing (8h)+
+*Markus:* PCB designing (8h) +
 
 === Monday 2022-12-05
 
-*Anton:* CAM completed, whole new robot fabricated (8h)+
-*Markus:* PCB designing (4h)+
+*Anton:* CAM completed, whole new robot fabricated (8h) +
+*Markus:* PCB designing (4h) +
 
 === Tuesday 2022-12-06
 
-*Anton:* New robot assembling finished (3h)+
-*Markus:* Finished PCB designing (1h)+
+*Anton:* New robot assembling finished (3h) +
+*Markus:* Finished PCB designing (1h) +
 
 === Wednesday 2022-12-07
 
-*Andres:* Assembling old electronics on new chassis(3h)+
-*Elias:* Assembling old electronics on new chassis(3h)+
+*Andres:* Assembling old electronics on new chassis(3h) +
+*Elias:* Assembling old electronics on new chassis(3h) +
