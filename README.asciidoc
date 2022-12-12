@@ -184,9 +184,11 @@ https://a360.co/3WEcizI
 === Monday 2022-12-05
 
 *Anton:* CAM completed, whole new robot fabricated (8h)+
+*Andres:* Assembling old electronics on new chassis(3h)+
+*Elias:* Assembling old electronics on new chassis(3h)+
 *Markus:* PCB designing (4h)
 
-=== Monday 2022-12-06
+=== Tuesday 2022-12-06
 
 *Anton:* New robot assembling finished (3h)+
 *Markus:* Finished PCB designing (1h)
