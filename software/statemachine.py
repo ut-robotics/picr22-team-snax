@@ -6,6 +6,7 @@ class State(Enum):
     ORBIT = 3
     THROW = 4
     WAIT_REFEREE = 6
+    GO_TO_BASKET = 7
     MANUAL = 9
     TESTING = 10
 
@@ -19,7 +20,7 @@ class StateMachine:
         self.imageData = None
         self.imageWidth = 848
         self.imageHeight = 480
-        self.imageCenterPoint = 390
+        self.imageCenterPoint = 400
 
         #for FIND_BALL
         self.rotationSpeedAdjuster = 0
@@ -120,19 +121,20 @@ class StateMachine:
             self.currentState = State.FIND_BALL
             return
 
+        #stop if have orbited too far
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
-
-        if normalizedYDistanceFromBottom > 0.6:
+        if normalizedYDistanceFromBottom > 0.4:
             self.currentState = State.FIND_BALL
             return
 
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageCenterPoint)) / self.imageWidth
         basketMaxDistanceFromCenter = 15 #in pixels
-        basketFromCenterOffset = -5
+        #additional offset
+        basketOffset = -5
 
         #check if go into throwing state
         if self.throwIntoBlue:
-            if abs(self.imageData.basket_b.x - self.imageCenterPoint + basketFromCenterOffset) < basketMaxDistanceFromCenter:
+            if abs(self.imageData.basket_b.x - self.imageCenterPoint + basketOffset) < basketMaxDistanceFromCenter:
                 #if orbit is inaccurate, correct position once more
                 if abs(normalizedXDistanceFromCenter) > 0.15 or normalizedYDistanceFromBottom > 0.3:
                     self.currentState = State.GO_TO_BALL
@@ -142,7 +144,7 @@ class StateMachine:
                     self.currentState = State.THROW
                     return
         else:
-            if abs(self.imageData.basket_m.x - self.imageCenterPoint + basketFromCenterOffset) < basketMaxDistanceFromCenter:
+            if abs(self.imageData.basket_m.x - self.imageCenterPoint + basketOffset) < basketMaxDistanceFromCenter:
                 if abs(normalizedXDistanceFromCenter) > 0.15 or normalizedYDistanceFromBottom > 0.3:
                     self.currentState = State.GO_TO_BALL
                     self.orbitDone = True
@@ -151,19 +153,14 @@ class StateMachine:
                     self.currentState = State.THROW
                     return
 
-        trajectorySpeed = 0.3
-        
-        ySpeedMultiplier = 0.8
-        ySpeed = -(0.3 - normalizedYDistanceFromBottom) * ySpeedMultiplier
-        
+
+        #speed calculations
+        trajectorySpeed = 0.3        
         rotBase = 0.3
         rotSpeedMultiplier = -4
         rotSpeed = rotBase + normalizedXDistanceFromCenter * rotSpeedMultiplier
-        
-        
 
-        #if already see basket
-        #chooses which way to orbit
+        #changing orbit speed 
         slowOrbitZone = 100
         seeBasketSpeed = 0.2
         closeBasketSpeed = 0.05
