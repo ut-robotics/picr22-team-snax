@@ -175,11 +175,18 @@ https://a360.co/3WEcizI
 === Thursday 2022-12-01
 
 *Anton:* Whole new robot design issues solving (6h)+
+*Markus:* PCB designing (6h)
+
+=== Sunday 2022-12-04
+
+*Markus:* PCB designing (8h)
 
 === Monday 2022-12-05
 
 *Anton:* CAM completed, whole new robot fabricated (8h)+
+*Markus:* PCB designing (4h)
 
 === Monday 2022-12-06
 
 *Anton:* New robot assembling finished (3h)+
+*Markus:* Finished PCB designing (1h)
