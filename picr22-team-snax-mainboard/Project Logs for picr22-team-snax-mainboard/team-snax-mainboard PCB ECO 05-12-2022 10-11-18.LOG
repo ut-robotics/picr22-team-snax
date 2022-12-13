@@ -1,0 +1,19 @@
+Removed Pin From Net: NetName=NetJ5_1 Pin=J5-?
+Removed Pin From Net: NetName=GND Pin=R2-1
+Removed Pin From Net: NetName=GND Pin=R7-1
+Removed Pin From Net: NetName=GND Pin=R9-1
+Removed Pin From Net: NetName=GND Pin=U6-
+Removed Member From Class: ClassName=picr22-team-snax-mainboard Member=R2
+Removed Member From Class: ClassName=picr22-team-snax-mainboard Member=R7
+Removed Member From Class: ClassName=picr22-team-snax-mainboard Member=R9
+Add Component: Footprint Not Found CAP_0805
+Add Pin To Net: Unknown Pin: Pin C28-1
+Add Pin To Net: Unknown Pin: Pin C28-2
+Add Pin To Net: Unknown Pin: Pin J5-1
+Added Pin To Net: NetName=GND Pin=U3-8
+Added Pin To Net: NetName=GND Pin=U5-8
+Add Pin To Net: Unknown Pin: Pin U6-2
+Added Pin To Net: NetName=GND Pin=U8-8
+Add Class Member: Failed to add class member : Component C28 Cap_1
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component J5 Bat+
+Added Member To Class: ClassName=picr22-team-snax-mainboard Member=Component Q1 BUK6Y14-40P
