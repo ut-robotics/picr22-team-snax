@@ -86,48 +86,53 @@ class ImageProcessor():
             # ball filtering logic goes here. Example includes filtering by size and an example how to get pixels from
             # the bottom center of the fram to the ball
             
+            def find_multiple_matching_pixels(color, x, y, image, direction, pixels): 
+                    how_many_pixels = pixels
+                    pixel_counter = how_many_pixels
+                    try:
+                        while pixel_counter > 0:
+                            if image[x, y] == color:
+                                pixel_counter -= 1
+                            else:
+                                pixel_counter = 10
+                            if direction == "-y":
+                                y -= 1
+                            if direction == "y":
+                                y += 1
+                            if direction == "-x":
+                                x -= 1
+                            if direction == "x":
+                                x += 1
+                        return x, y
+                    except:
+                        return False
             
-           
-
-            '''
-            def detect_line(x, y):
-                counter = 10
-                true_counter = 0
-                y_height = len(self.color_frame[x])
-                while y > 0:
-                    
-                    
-                    if self.color_frame[x][y] == c.Color.BLACK.color.tolist():
-                        while True:
-                            if self.color_frame[x][y] == c.Color.BLACK.color.tolist():
-                                true_counter += 1
-                                if true_counter > 10 and self.color_frame[x][y] == c.Color.WHITE.color.tolist():
-                                    break
-                            elif y >= y_height:
-                                return False
-                            else:
-                                true_counter = 0
-                                continue
-                            y -= 1                
-                        while True:
-                            if self.color_frame[x][y] == c.Color.WHITE.color.tolist():
-                                true_counter += 1
-                                if true_counter > 10:
-                                    return True
-                            elif y >= y_height:
-                                return False
-                            else:
-                                true_counter = 0
-                                continue
-                            y -= 1
+            def detect_line_between_ball_and_robot(x, y):
+                processedData = processor.process_frame()
+                rgb = processedData.color_frame
+                black = c.Color.BLACK.color.tolist()
+                white = c.Color.WHITE.color.tolist()
                 
-                ####### UUUUS KOOOO
-                ####### UUUUS KOOOO
-                ####### UUUUS KOOOO
-                            
-                        
-                    y -= 1
-            '''        
+                try:
+                    after_dark_cordinates = find_multiple_matching_pixels(black, x, y, rgb, "-y", 10)
+                    find_multiple_matching_pixels(white, after_dark_cordinates[0], after_dark_cordinates[1], rgb, "-y", 10)
+                    return True
+                except:
+                    return False
+                
+            def detect_if_ball_in_black(x, y):
+                processedData = processor.process_frame()
+                rgb = processedData.color_frame
+                black = c.Color.BLACK.color.tolist()
+                try:
+                    find_multiple_matching_pixels(black, x, y, rgb, "-x", 30)
+                    find_multiple_matching_pixels(black, x, y, rgb, "x", 30)
+                    return True
+                except:
+                    return False
+                    
+                    
+                
             size = cv2.contourArea(contour)
 
             if size < 15:
@@ -145,11 +150,9 @@ class ImageProcessor():
             if self.debug:
                 self.debug_frame[ys, xs] = [0, 0, 0]
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
-            '''
-            if detect_line(obj_x, obj_y) == False:
-            '''
-            #ignore noise not on the field
-            if obj_y > 80:
+                
+            #ignore noise above the field and balls over the line and balls in black
+            if obj_y > 80 and detect_line_between_ball_and_robot(obj_x, obj_y) == False and detect_if_ball_in_black(obj_x, obj_y) == False:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)
