@@ -8,14 +8,12 @@ class State(Enum):
     WAIT_REFEREE = 6
     GO_TO_BASKET = 7
     MANUAL = 9
-    TESTING = 10
-
 
 class StateMachine:
     def __init__(self, omniRobot):
         self.currentState = State.FIND_BALL
         self.robot = omniRobot
-        self.throwIntoBlue = True
+        self.throwIntoBlue = False
 
         self.imageData = None
         self.imageWidth = 848
@@ -24,9 +22,6 @@ class StateMachine:
 
         #for FIND_BALL
         self.rotationSpeedAdjuster = 0
-
-        #for GO_TO_BALL
-        self.orbitDone = False
 
         #for THROW
         self.throwerTimer = 0
@@ -49,8 +44,6 @@ class StateMachine:
             pass
         if self.currentState == State.WAIT_REFEREE:
             self.robot.stop()
-        if self.currentState == State.TESTING:
-            self.goToBall()
 
     def getLargestBallCoords(self, imageData):
         largestBallX = 0
@@ -97,16 +90,11 @@ class StateMachine:
         #y is 1 if ball is far away, value [0, 1]
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
 
-        if normalizedYDistanceFromBottom < 0.22 and abs(normalizedXDistanceFromCenter) < 0.1:
-            #if only correcting position
-            if self.orbitDone == True:
-                self.currentState = State.THROW
-                return
+        if normalizedYDistanceFromBottom < 0.28 and abs(normalizedXDistanceFromCenter) < 0.05:
             self.currentState = State.ORBIT
             return
 
-        # TODO optimize
-        speedMultipliers = {'X': 0.4, 'Y': 1, "ROT": -3}
+        speedMultipliers = {'X': 0.7, 'Y': 1, "ROT": -3}
 
         robotSpeeds = {'X': normalizedXDistanceFromCenter * speedMultipliers['X'], 'Y': normalizedYDistanceFromBottom * speedMultipliers['Y'], "ROT": normalizedXDistanceFromCenter * speedMultipliers['ROT']}
 
@@ -123,31 +111,27 @@ class StateMachine:
 
         #stop if have orbited too far
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
-        if normalizedYDistanceFromBottom > 0.4:
+        if normalizedYDistanceFromBottom > 0.2:
             self.currentState = State.FIND_BALL
             return
 
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageCenterPoint)) / self.imageWidth
-        basketMaxDistanceFromCenter = 15 #in pixels
-        #additional offset
-        basketOffset = -5
+        basketMaxDistanceFromCenter = 30 #in pixels
 
         #check if go into throwing state
         if self.throwIntoBlue:
-            if abs(self.imageData.basket_b.x - self.imageCenterPoint + basketOffset) < basketMaxDistanceFromCenter:
+            if abs(self.imageData.basket_b.x - self.imageCenterPoint) < basketMaxDistanceFromCenter:
                 #if orbit is inaccurate, correct position once more
-                if abs(normalizedXDistanceFromCenter) > 0.15 or normalizedYDistanceFromBottom > 0.3:
+                if abs(normalizedXDistanceFromCenter) > 0.1 or normalizedYDistanceFromBottom > 0.15:
                     self.currentState = State.GO_TO_BALL
-                    self.orbitDone = True
                     return
                 else:
                     self.currentState = State.THROW
                     return
         else:
-            if abs(self.imageData.basket_m.x - self.imageCenterPoint + basketOffset) < basketMaxDistanceFromCenter:
-                if abs(normalizedXDistanceFromCenter) > 0.15 or normalizedYDistanceFromBottom > 0.3:
+            if abs(self.imageData.basket_m.x - self.imageCenterPoint) < basketMaxDistanceFromCenter:
+                if abs(normalizedXDistanceFromCenter) > 0.1 or normalizedYDistanceFromBottom > 0.15:
                     self.currentState = State.GO_TO_BALL
-                    self.orbitDone = True
                     return
                 else:
                     self.currentState = State.THROW
@@ -163,7 +147,7 @@ class StateMachine:
         #changing orbit speed 
         slowOrbitZone = 100
         seeBasketSpeed = 0.2
-        closeBasketSpeed = 0.05
+        closeBasketSpeed = 0.09
         if self.throwIntoBlue:
             #if i see basket, move slower
             if self.imageData.basket_b.exists:
@@ -185,6 +169,7 @@ class StateMachine:
                     rotSpeed = -rotSpeed
 
         self.robot.move(trajectorySpeed, 0, rotSpeed)
+
 
     #averages pixel distances of a 5x5 square from depth_image
     def basketDist(self, x, y):
@@ -213,7 +198,7 @@ class StateMachine:
         basketDistance = self.basketDist(basketCenterX, basketCenterY)
         
         throwerMultiplier = 0.245 #0.247 #0.234 #2.1 #1.95
-        throwerSpeed = round(basketDistance*throwerMultiplier + 610) #695 #685 #300 #390
+        throwerSpeed = round(basketDistance*throwerMultiplier + 600) #610 #695 #685 #300 #390
 
         print("distance:")        
         print(basketDistance)
@@ -229,5 +214,4 @@ class StateMachine:
 
         #go to beginning
         self.throwerTimer = 0
-        self.orbitDone = False
         self.currentState = State.FIND_BALL

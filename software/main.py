@@ -13,6 +13,8 @@ import referee
 # TODO create config file for constants
 # TODO slightly erode then dilate green pixels???
 # TODO improve robot.orbit 
+# TODO make robot drive towards other basket if point basket is too close
+
 
 def main():
     #---------
@@ -73,8 +75,6 @@ def main():
                 stateMachine.setState(statemachine.State.ORBIT)
             if stateMachine.currentState == statemachine.State.THROW:
                 useDepthImage = True
-                stateMachine.setState(statemachine.State.THROW)
-            if stateMachine.currentState == statemachine.State.TESTING:
                 stateMachine.setState(statemachine.State.THROW)
             if stateMachine.currentState == statemachine.State.WAIT_REFEREE:
                 stateMachine.setState(statemachine.State.WAIT_REFEREE)
