@@ -4,9 +4,9 @@ import json
 import multiprocessing
 
 class Referee:
-    def __init__(self, ip, robotName = "snax"):
+    def __init__(self, ip, robotName = "snax", port = "8222"):
         self.robotName = robotName
-        self.serverURL = "ws://" + ip + ":8222"
+        self.serverURL = "ws://" + ip + ":" + port
         self.ws = websocket.WebSocket()
         self.commands = multiprocessing.Queue()
 

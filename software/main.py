@@ -11,8 +11,6 @@ import referee
 
 # TODO if too much black around ball, ignore it
 # TODO create config file for constants
-# TODO slightly erode then dilate green pixels???
-# TODO improve robot.orbit 
 # TODO make robot drive towards other basket if point basket is too close
 
 
@@ -29,11 +27,12 @@ def main():
     
     omniRobot = motion.OmniMotionRobot()
     stateMachine = statemachine.StateMachine(omniRobot)
+    stateMachine.throwIntoBlue = True
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
 
     if competition:
-        robotReferee = referee.Referee(ip="192.168.3.30")
+        robotReferee = referee.Referee(ip="192.168.3.30", port="8222")
         robotReferee.startReferee()
         stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
