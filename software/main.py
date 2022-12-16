@@ -30,6 +30,7 @@ def main():
     stateMachine.throwIntoBlue = True
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
+    #stateMachine.currentState = statemachine.State.TESTING
 
     if competition:
         robotReferee = referee.Referee(ip="192.168.3.30", port="8222")
@@ -77,6 +78,9 @@ def main():
             if stateMachine.currentState == statemachine.State.THROW:
                 useDepthImage = True
                 stateMachine.setState(statemachine.State.THROW)
+            if stateMachine.currentState == statemachine.State.TESTING:
+                useDepthImage = True
+                stateMachine.setState(statemachine.State.TESTING)
             if stateMachine.currentState == statemachine.State.WAIT_REFEREE:
                 stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
