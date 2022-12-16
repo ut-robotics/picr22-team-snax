@@ -33,7 +33,7 @@ def main():
     stateMachine.imageHeight = cam.rgb_height
 
     if competition:
-        robotReferee = referee.Referee(ip="192.168.3.220")
+        robotReferee = referee.Referee(ip="192.168.3.30")
         robotReferee.startReferee()
         stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
@@ -71,6 +71,8 @@ def main():
                 stateMachine.setState(statemachine.State.FIND_BALL)
             if stateMachine.currentState == statemachine.State.GO_TO_BALL:
                 stateMachine.setState(statemachine.State.GO_TO_BALL) 
+            if stateMachine.currentState == statemachine.State.GO_TO_BASKET:
+                stateMachine.setState(statemachine.State.GO_TO_BASKET)
             if stateMachine.currentState == statemachine.State.ORBIT:
                 stateMachine.setState(statemachine.State.ORBIT)
             if stateMachine.currentState == statemachine.State.THROW:

@@ -147,7 +147,7 @@ class ImageProcessor():
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
                 
             #ignore noise above the field and balls over the line and balls in black
-            if obj_y > 80 and self.detect_line_between_ball_and_robot(obj_x, obj_y) == False and self.detect_if_ball_in_black(obj_x, obj_y) == False:
+            if obj_y > 80 and self.detect_line_between_ball_and_robot(obj_x, obj_y,fragments) == False and self.detect_if_ball_in_black(obj_x, obj_y,fragments) == False:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)

@@ -14,11 +14,13 @@ class StateMachine:
         self.currentState = State.FIND_BALL
         self.robot = omniRobot
         self.throwIntoBlue = False
+        self.patrolCounter = 0
 
         self.imageData = None
         self.imageWidth = 848
         self.imageHeight = 480
         self.imageCenterPoint = 400
+        self.orbitMaxBallDist = 0.25
 
         #for FIND_BALL
         self.rotationSpeedAdjuster = 0
@@ -26,7 +28,6 @@ class StateMachine:
         #for THROW
         self.throwerTimer = 0
         
-
     def setImageData(self, data):
         self.imageData = data
         
@@ -36,6 +37,8 @@ class StateMachine:
             self.findBall()
         if self.currentState == State.GO_TO_BALL:
             self.goToBall()
+        if self.currentState == State.GO_TO_BASKET:
+            self.goToBasket()
         if self.currentState == State.ORBIT:
             self.orbit()
         if self.currentState == State.THROW:
@@ -58,6 +61,7 @@ class StateMachine:
     
     #find any ball, slow rotation periodically
     def findBall(self):
+        self.patrolCounter += 1
         if len(self.imageData.balls) == 0:
             if self.rotationSpeedAdjuster < 30:
                 self.robot.move(0,0,1.5)
@@ -67,8 +71,40 @@ class StateMachine:
                 self.rotationSpeedAdjuster += 1
             else:
                 self.rotationSpeedAdjuster = 0
+            if self.patrolCounter >= 200:
+                self.currentState = State.GO_TO_BASKET
+                self.patrolCounter = 0
+                return
         else:
+            self.patrolCounter = 0
             self.currentState = State.GO_TO_BALL
+    
+    def goToBasket(self):
+        if self.throwIntoBlue == True:
+            #find and center basket
+            
+            if self.imageData.basket_b.exists:
+                if self.patrolCounter < 100:
+                    self.robot.move(0,0.7,0)
+                    self.patrolCounter += 1
+                else:
+                    self.patrolCounter = 0
+                    self.currentState = State.FIND_BALL
+                    return
+            else:
+                self.robot.move(0,0,0.8)
+
+        else:
+            if self.imageData.basket_m.exists:
+                if self.patrolCounter < 100:
+                    self.robot.move(0,0.7,0)
+                    self.patrolCounter += 1
+                else:
+                    self.patrolCounter = 0
+                    self.currentState = State.FIND_BALL
+                    return
+            else:
+                self.robot.move(0,0,0.8)
 
     def goToBall(self):
         # TODO cap positive acceleration
@@ -90,7 +126,7 @@ class StateMachine:
         #y is 1 if ball is far away, value [0, 1]
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
 
-        if normalizedYDistanceFromBottom < 0.28 and abs(normalizedXDistanceFromCenter) < 0.05:
+        if normalizedYDistanceFromBottom < self.orbitMaxBallDist - 0.08 and abs(normalizedXDistanceFromCenter) < 0.1:
             self.currentState = State.ORBIT
             return
 
@@ -111,12 +147,12 @@ class StateMachine:
 
         #stop if have orbited too far
         normalizedYDistanceFromBottom = (self.imageHeight - ballYCoord) / self.imageHeight
-        if normalizedYDistanceFromBottom > 0.2:
+        if normalizedYDistanceFromBottom > self.orbitMaxBallDist + 0.08:
             self.currentState = State.FIND_BALL
             return
 
         normalizedXDistanceFromCenter = (ballXCoord - (self.imageCenterPoint)) / self.imageWidth
-        basketMaxDistanceFromCenter = 30 #in pixels
+        basketMaxDistanceFromCenter = 28 #in pixels
 
         #check if go into throwing state
         if self.throwIntoBlue:
@@ -146,8 +182,8 @@ class StateMachine:
 
         #changing orbit speed 
         slowOrbitZone = 100
-        seeBasketSpeed = 0.2
-        closeBasketSpeed = 0.09
+        seeBasketSpeed = 0.15
+        closeBasketSpeed = 0.06
         if self.throwIntoBlue:
             #if i see basket, move slower
             if self.imageData.basket_b.exists:
@@ -174,10 +210,10 @@ class StateMachine:
     #averages pixel distances of a 5x5 square from depth_image
     def basketDist(self, x, y):
         distanceSum = 0
-        for i in range(-2, 3):
-            for j in range(-2, 3):
+        for i in range(-1, 2):
+            for j in range(-1, 2):
                 distanceSum += self.imageData.depth_frame[y+i][x+j]
-        basketDistance = int(distanceSum / 25)
+        basketDistance = int(distanceSum / 9)
         return basketDistance
 
     def throw(self):
