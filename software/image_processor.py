@@ -98,8 +98,8 @@ class ImageProcessor():
         white = c.Color.WHITE.color.tolist()
         
         try:
-            after_dark_cordinates = find_multiple_matching_pixels(black, x, y, rgb, "-y", 10)
-            find_multiple_matching_pixels(white, after_dark_cordinates[0], after_dark_cordinates[1], rgb, "-y", 10)
+            after_dark_cordinates = self.find_multiple_matching_pixels(black, x, y, rgb, "-y", 10)
+            self.find_multiple_matching_pixels(white, after_dark_cordinates[0], after_dark_cordinates[1], rgb, "-y", 10)
             return True
         except:
             return False
@@ -108,8 +108,8 @@ class ImageProcessor():
         rgb = fragmented
         black = c.Color.BLACK.color.tolist()
         try:
-            find_multiple_matching_pixels(black, x, y, rgb, "-x", 30)
-            find_multiple_matching_pixels(black, x, y, rgb, "x", 30)
+            self.find_multiple_matching_pixels(black, x, y, rgb, "-x", 30)
+            self.find_multiple_matching_pixels(black, x, y, rgb, "x", 30)
             return True
         except:
             return False
@@ -147,7 +147,7 @@ class ImageProcessor():
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
                 
             #ignore noise above the field and balls over the line and balls in black
-            if obj_y > 80 and self.detect_line_between_ball_and_robot(obj_x, obj_y,fragments) == False and self.detect_if_ball_in_black(obj_x, obj_y,fragments) == False:
+            if obj_y > 80: # and self.detect_if_ball_in_black(obj_x, obj_y,fragments) == False:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)

@@ -129,7 +129,7 @@ class StateMachine:
             self.currentState = State.ORBIT
             return
 
-        speedMultipliers = {'X': 0.7, 'Y': 1, "ROT": -5}
+        speedMultipliers = {'X': 0.7, 'Y': 1.5, "ROT": -5}
 
         robotSpeeds = {'X': normalizedXDistanceFromCenter * speedMultipliers['X'], 'Y': normalizedYDistanceFromBottom * speedMultipliers['Y'], "ROT": normalizedXDistanceFromCenter * speedMultipliers['ROT']}
 
@@ -249,8 +249,8 @@ class StateMachine:
 
         basketDistance = self.basketDist(basketCenterX, basketCenterY)
         
-        throwerMultiplier = 0.228 #0.254 #0.245 #0.247 #0.234 #2.1 #1.95
-        vabaliige = 645 #657
+        throwerMultiplier = 0.218 #0.246 #0.228 #0.254 #0.245 #0.247 #0.234 #2.1 #1.95
+        vabaliige = 655 #645 #657
         #throwerSpeed = int(math.log(basketDistance)*457 - 2253) #610 #695 #685 #300 #390
         throwerSpeed = int(basketDistance*throwerMultiplier + vabaliige)
 
@@ -260,10 +260,15 @@ class StateMachine:
         
         print("speed:")
         print(throwerSpeed)
+        
+        in_throw_inaccuracy = basketCenterX - self.imageCenterPoint
+        rot_speed_multiplier = -0.03
+        self.robot.move(0, 0.25, rot_speed_multiplier * in_throw_inaccuracy, int(throwerSpeed))
+
 
         self.robot.move(0, 0.25, 0, int(throwerSpeed))
         #move blindly forward and throw for 30 frames
-        if self.throwerTimer <= 22:
+        if self.throwerTimer <= 30:
             self.robot.move(0, 0.25, 0, int(throwerSpeed))        
             self.throwerTimer += 1         
             return  

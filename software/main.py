@@ -17,7 +17,7 @@ import referee
 def main():
     #---------
     #config
-    competition = False
+    competition = True
     debug = True
     #---------
 
@@ -30,10 +30,10 @@ def main():
     stateMachine.throwIntoBlue = True
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
-    #stateMachine.currentState = statemachine.State.TESTING
+    #stateMachine.currentState = statemachine.State.GO_TO_BASKET
 
     if competition:
-        robotReferee = referee.Referee(ip="192.168.3.30", port="8222")
+        robotReferee = referee.Referee(ip="192.168.3.220", port="8111")
         robotReferee.startReferee()
         stateMachine.setState(statemachine.State.WAIT_REFEREE)
 
@@ -50,6 +50,7 @@ def main():
                 cmd = robotReferee.getCommand()
                 if (cmd != None):
                     if cmd[0] == 'START':
+                        #stateMachine.currentState = statemachine.State.GO_TO_BASKET
                         stateMachine.currentState = statemachine.State.FIND_BALL
                         if cmd[1] == 'blue':
                             stateMachine.throwIntoBlue = True
