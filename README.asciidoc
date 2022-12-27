@@ -199,7 +199,7 @@ https://a360.co/3WEcizI
 
 == Mechanics, personal comment
 
-image::{attach}picr22-team-snax/main_bot.jpg[]
+image::main_bot.jpg[]
 
 1. The entire mechanics was done by me;
 2. I have learned Fusion 360, 3d printing, milling and other manufacturing technics (manual, during assembling);
