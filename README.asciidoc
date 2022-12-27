@@ -202,4 +202,6 @@ https://a360.co/3WEcizI
 1. The entire mechanics was done by me;
 2. I have learned Fusion 360, 3d printing, milling and other manufacturing technics (manual, during assembling);
 3. I hate Fusion, there are other CAD systems I would like to work with next time (it also crashes frequently);
-4. In general I am satisfied with my mechanics, the bot was moving quite smooth with no vibration, also the team noted that alike the test robot, on the new one there was much less vibration. I have not done adjustable thrower and ball holder (partially because it was useless cause of absense of any servo channels on ours electronics) which would be more challenging with currect thrower design's restrictions...
+4. In general I am satisfied with my mechanics, the bot was moving quite smooth with no vibration, also the team noted that alike the test robot, on the new one there was much less vibration. Also, possibly, I have designed the smallest bot for the entire course, which is a good challenge to do for myself, cause my previous degree in aviation (we do like saving space and reducing weight much ;3 ).
+
+I have not done adjustable thrower and ball holder (partially because it was useless cause of absense of any servo channels on ours electronics) which would be more challenging with currect thrower design's restrictions...
