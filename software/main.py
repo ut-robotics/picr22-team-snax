@@ -2,6 +2,7 @@ from pyexpat.errors import XML_ERROR_UNKNOWN_ENCODING
 from types import *
 import image_processor
 import camera
+import Color
 import motion
 import statemachine
 import cv2
@@ -27,7 +28,7 @@ def main():
     
     omniRobot = motion.OmniMotionRobot()
     stateMachine = statemachine.StateMachine(omniRobot)
-    stateMachine.throwIntoBlue = True
+    stateMachine.throwInto = Color.BLUE
     stateMachine.imageWidth = cam.rgb_width
     stateMachine.imageHeight = cam.rgb_height
     #stateMachine.currentState = statemachine.State.GO_TO_BASKET
@@ -53,9 +54,9 @@ def main():
                         #stateMachine.currentState = statemachine.State.GO_TO_BASKET
                         stateMachine.currentState = statemachine.State.FIND_BALL
                         if cmd[1] == 'blue':
-                            stateMachine.throwIntoBlue = True
+                            stateMachine.throwInto = Color.BLUE
                         else:
-                            stateMachine.throwIntoBlue = False
+                            stateMachine.throwInto = Color.MAGENTA
 
                     elif cmd[0] == 'STOP':
                         stateMachine.currentState = statemachine.State.WAIT_REFEREE
@@ -68,22 +69,12 @@ def main():
 
             useDepthImage = False
 
-            if stateMachine.currentState == statemachine.State.FIND_BALL:
-                stateMachine.setState(statemachine.State.FIND_BALL)
-            if stateMachine.currentState == statemachine.State.GO_TO_BALL:
-                stateMachine.setState(statemachine.State.GO_TO_BALL) 
-            if stateMachine.currentState == statemachine.State.GO_TO_BASKET:
-                stateMachine.setState(statemachine.State.GO_TO_BASKET)
-            if stateMachine.currentState == statemachine.State.ORBIT:
-                stateMachine.setState(statemachine.State.ORBIT)
             if stateMachine.currentState == statemachine.State.THROW:
                 useDepthImage = True
-                stateMachine.setState(statemachine.State.THROW)
             if stateMachine.currentState == statemachine.State.TESTING:
                 useDepthImage = True
-                stateMachine.setState(statemachine.State.TESTING)
-            if stateMachine.currentState == statemachine.State.WAIT_REFEREE:
-                stateMachine.setState(statemachine.State.WAIT_REFEREE)
+
+            stateMachine.executeState(stateMachine.currentState)
 
             frame_cnt +=1
             frame += 1

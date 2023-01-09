@@ -1,5 +1,6 @@
 from enum import Enum
 import math
+import Color
 
 class State(Enum):
     FIND_BALL = 1
@@ -14,11 +15,11 @@ class StateMachine:
     def __init__(self, omniRobot):
         self.currentState = State.FIND_BALL
         self.robot = omniRobot
-        self.throwIntoBlue = False
-
+        self.throwInto = Color.BLUE
+    
         self.imageData = None
-        self.imageWidth = 848
-        self.imageHeight = 480
+        self.imageWidth = None
+        self.imageHeight = None
         self.imageCenterPoint = 400
 
         #for GO_TO_BASKET
@@ -33,8 +34,7 @@ class StateMachine:
     def setImageData(self, data):
         self.imageData = data
         
-    def setState(self, state):
-        self.currentState = state
+    def executeState(self):
         if self.currentState == State.FIND_BALL:
             self.findBall()
         if self.currentState == State.GO_TO_BALL:
@@ -82,7 +82,7 @@ class StateMachine:
             self.currentState = State.GO_TO_BALL
     
     def goToBasket(self):
-        if self.throwIntoBlue == True:
+        if self.throwInto == Color.BLUE:
             if self.imageData.basket_b.exists:
                 if self.patrolCounter < 100:
                     self.robot.move(0,0.7,0)
@@ -159,7 +159,7 @@ class StateMachine:
         basketMaxDistanceFromCenter = 10 #in pixels
 
         #check if go into throwing state
-        if self.throwIntoBlue:
+        if self.throwInto == Color.BLUE:
             if abs(self.imageData.basket_b.x - self.imageCenterPoint) < basketMaxDistanceFromCenter:
                 self.currentState = State.THROW
                 return
@@ -180,7 +180,7 @@ class StateMachine:
         seeBasketSpeed = 0.15
         closeBasketSpeed = 0.06
 
-        if self.throwIntoBlue:
+        if self.throwInto == Color.BLUE:
             #if i see basket, move slower
             if self.imageData.basket_b.exists:
                 trajectorySpeed = seeBasketSpeed
@@ -205,28 +205,17 @@ class StateMachine:
         self.robot.move(trajectorySpeed, 0, rotSpeed)
 
 
-    #averages pixel distances of a 5x5 square from depth_image
-    def basketDist(self, x, y):
-        distanceSum = 0
-        for i in range(-2, 3):
-            for j in range(-2, 3):
-                distanceSum += self.imageData.depth_frame[y+i][x+j]
-        basketDistance = int(distanceSum / 25)
-        return basketDistance
+   
 
     def testing(self):
-        try:
-            if self.throwIntoBlue == True:
-                basketCenterY = self.imageData.basket_b.y
-                basketCenterX = self.imageData.basket_b.x
-            else:
-                basketCenterY = self.imageData.basket_m.y
-                basketCenterX = self.imageData.basket_m.x
-
-            basketDistance = self.basketDist(basketCenterX, basketCenterY)
-
-        except:
-            basketDistance = 0
+        if self.throwInto == Color.BLUE:
+            basketCenterY = self.imageData.basket_b.y
+            basketCenterX = self.imageData.basket_b.x
+            basketDistance = self.imageData.basket_b.distance
+        else:
+            basketCenterY = self.imageData.basket_m.y
+            basketCenterX = self.imageData.basket_m.x
+            basketDistance = self.imageData.basket_m.distance
         print(basketDistance)
         throwerSpeed = 1500
         self.robot.move(0, 0, 0, int(throwerSpeed))
@@ -240,14 +229,14 @@ class StateMachine:
         #dist 3250 spd 1450
         #---------MEASUREMENTS-----------
 
-        if self.throwIntoBlue == True:
+        if self.throwInto == Color.BLUE:
             basketCenterY = self.imageData.basket_b.y
             basketCenterX = self.imageData.basket_b.x
+            basketDistance = self.imageData.basket_b.distance
         else:
             basketCenterY = self.imageData.basket_m.y
             basketCenterX = self.imageData.basket_m.x
-
-        basketDistance = self.basketDist(basketCenterX, basketCenterY)
+            basketDistance = self.imageData.basket_m.distance
         
         throwerMultiplier = 0.218 #0.246 #0.228 #0.254 #0.245 #0.247 #0.234 #2.1 #1.95
         vabaliige = 655 #645 #657

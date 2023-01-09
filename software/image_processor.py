@@ -154,6 +154,15 @@ class ImageProcessor():
 
         return balls
 
+    #averages pixel distances of a 5x5 square from depth_image
+    def basketDist(self, x, y):
+        distanceSum = 0
+        for i in range(-2, 3):
+            for j in range(-2, 3):
+                distanceSum += self.imageData.depth_frame[y+i][x+j]
+        basketDistance = int(distanceSum / 25)
+        return basketDistance
+
     def analyze_baskets(self, t_basket, debug_color = (0, 255, 255), depth_frame = False) -> list:
         contours, hierarchy = cv2.findContours(t_basket, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -171,7 +180,7 @@ class ImageProcessor():
 
             obj_x = int(x + (w/2))
             obj_y = int(y + (h/2))
-            obj_dst = obj_y
+            obj_dst = basketDist(obj_x, obj_y)
 
             baskets.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 

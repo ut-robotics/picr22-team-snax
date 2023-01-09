@@ -53,7 +53,7 @@ class OmniMotionRobot:
     #orbit movement around point to find basket
     #positive orbit speed is orbiting orbiting counterclockwise if viewed from above
     def orbit(self, orbitSpeed, orbitRadius):
-        orbitCircumference = orbitRadius * 2 * 3.141528
+        orbitCircumference = orbitRadius * 2 * math.pi
         timeToCompleteFullCircle = orbitCircumference / orbitSpeed
         #in radians
         rotationalSpeed = 2 * 3.141528 / timeToCompleteFullCircle
