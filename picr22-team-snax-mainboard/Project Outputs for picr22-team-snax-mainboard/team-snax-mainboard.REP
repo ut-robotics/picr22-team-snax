@@ -108,7 +108,7 @@ Generating : Bottom Layer
 
 Used DCodes :
     D10
-    D18
+    D11
     D33
     D43
     D45
@@ -136,7 +136,7 @@ Generating : Bottom Paste
 
 
 Used DCodes :
-    D18
+    D11
     D33
     D54
 *************************************************************
@@ -215,10 +215,10 @@ Used DCodes :
     D16
     D17
     D18
-    D20
+    D19
     D21
-    D25
-    D28
+    D22
+    D26
     D29
     D30
     D31
@@ -249,7 +249,7 @@ Used DCodes :
     D35
     D36
     D37
-    D60
+    D59
     D61
     D62
     D63
