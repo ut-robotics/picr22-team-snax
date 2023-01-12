@@ -20,10 +20,10 @@ class SerialPortNotFound(Exception):
 class Mainboard():
     def __init__(self, max_speed):
         # General movement constants
-        self.wheel_angles = np.radians([240, 120, 0]) #radians
+        self.wheel_angles = np.radians([0, 240, 120]) #radians
         self.encoder_edges_per_motor_revolution = 64
         self.gearbox_ratio = 18.75 # 19?
-        self.wheel_radius = 0.365 #meters
+        self.wheel_radius = 0.35 #meters
         self.wheel_distance_from_center = 0.15 #meters
         self.encoder_counts_per_wheel_revolution = self.gearbox_ratio * self.encoder_edges_per_motor_revolution
         self.pid_control_frequency = 100 #Hz
@@ -34,6 +34,11 @@ class Mainboard():
         # Mainboard communication
         self.mainboard_hwid = "USB VID:PID=0483:5740"
         self.baud_rate = 115200
+           
+    #def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
+       #ser = serial.Serial(self.robotSerialDevice, 115200)
+        #movementCommand = struct.pack('<hhhHBH', int(rearSpeed), int(leftSpeed), int(rightSpeed), int(throwerSpeed), True, 0xAAAA)
+        #ser.write(movementCommand)
 
         # Orbiting constants
         self.buffer_r = 1
