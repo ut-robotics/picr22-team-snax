@@ -32,7 +32,7 @@ class Mainboard():
         self.max_speed = max_speed
 
         # Mainboard communication
-        self.mainboard_hwid = "USB VID:PID=0483:5740"
+        self.mainboard_hwid = "USB VID:PID=0483:DF11"
         self.baud_rate = 115200
            
     #def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
