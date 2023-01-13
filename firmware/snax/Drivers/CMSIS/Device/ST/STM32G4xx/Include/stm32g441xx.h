@@ -7,17 +7,18 @@
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral's registers hardware
+  *           - Macros to access peripheral’s registers hardware
   *
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -44,11 +45,11 @@
 /**
   * @brief Configuration of the Cortex-M4 Processor and Core Peripherals
    */
-#define __CM4_REV                 0x0001U  /*!< Cortex-M4 revision r0p1                       */
-#define __MPU_PRESENT             1U       /*!< STM32G4XX provides an MPU                     */
-#define __NVIC_PRIO_BITS          4U       /*!< STM32G4XX uses 4 Bits for the Priority Levels */
-#define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used  */
-#define __FPU_PRESENT             1U       /*!< FPU present                                   */
+#define __CM4_REV                 0x0001  /*!< Cortex-M4 revision r0p1                       */
+#define __MPU_PRESENT             1       /*!< STM32G4XX provides an MPU                     */
+#define __NVIC_PRIO_BITS          4       /*!< STM32G4XX uses 4 Bits for the Priority Levels */
+#define __Vendor_SysTickConfig    0       /*!< Set to 1 if different SysTick Config is used  */
+#define __FPU_PRESENT             1       /*!< FPU present                                   */
 
 /**
   * @}
@@ -943,10 +944,6 @@ typedef struct
 } UCPD_TypeDef;
 
 
-/**
-  * @}
-  */
-
 /** @addtogroup Peripheral_memory_map
   * @{
   */
@@ -1225,15 +1222,6 @@ typedef struct
 /** @addtogroup Exported_constants
   * @{
   */
-
-  /** @addtogroup Hardware_Constant_Definition
-    * @{
-    */
-#define LSI_STARTUP_TIME 130U /*!< LSI Maximum startup time in us */
-
-  /**
-    * @}
-    */
 
 /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
@@ -13369,3 +13357,4 @@ typedef struct
   * @}
   */
 
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
