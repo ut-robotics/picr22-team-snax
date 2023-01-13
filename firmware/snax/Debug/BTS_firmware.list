@@ -1,5 +1,5 @@
 
-BTS_firmware.elf:     file format elf32-littlearm
+snax_firmware.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn

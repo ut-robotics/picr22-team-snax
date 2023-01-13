@@ -39,34 +39,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := BTS_firmware
+BUILD_ARTIFACT_NAME := snax_firmware
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME).$(BUILD_ARTIFACT_EXTENSION)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-BTS_firmware.elf \
+snax_firmware.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-BTS_firmware.list \
+snax_firmware.list \
 
 OBJCOPY_BIN += \
-BTS_firmware.bin \
+snax_firmware.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: BTS_firmware.elf secondary-outputs
+main-build: snax_firmware.elf secondary-outputs
 
 # Tool invocations
-BTS_firmware.elf: $(OBJS) $(USER_OBJS) C:\Users\ACER\Documents\STM32CubeIDE\workspace_1.6.1\BTS_firmware\STM32G441KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "BTS_firmware.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ACER\Documents\STM32CubeIDE\workspace_1.6.1\BTS_firmware\STM32G441KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="BTS_firmware.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+snax_firmware.elf: $(OBJS) $(USER_OBJS) C:\Users\ACER\Documents\STM32CubeIDE\workspace_1.6.1\snax_firmware\STM32G441KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "snax_firmware.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ACER\Documents\STM32CubeIDE\workspace_1.6.1\snax_firmware\STM32G441KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="snax_firmware.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -75,13 +75,13 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-BTS_firmware.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "BTS_firmware.list"
+snax_firmware.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "snax_firmware.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-BTS_firmware.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "BTS_firmware.bin"
+snax_firmware.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "snax_firmware.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
