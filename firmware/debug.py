@@ -1,6 +1,6 @@
 import math, struct, time, sys
 import numpy as np
-import serial, serial.tools.list_ports
+import serial # , serial.tools.list_ports
 
 # Custom package paramaters
 # Motor speeds 
