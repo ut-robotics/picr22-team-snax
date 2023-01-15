@@ -23,7 +23,7 @@ class OmniMotionRobot:
     #sends data struct to mainboard
     def serialCommunication(self, rearSpeed, leftSpeed, rightSpeed, throwerSpeed):
         ser = serial.Serial(self.robotSerialDevice, 115200)
-        movementCommand = struct.pack('<hhhHBH', int(rearSpeed), int(leftSpeed), int(rightSpeed), int(throwerSpeed), True, 0xAAAA)
+        movementCommand = struct.pack('<hhhHH', int(rearSpeed), int(leftSpeed), int(rightSpeed), int(throwerSpeed), 0xAAAA)
         ser.write(movementCommand)
 
     #given in m/s. xSpeed is sideways, ySpeed is forward, rotSpeed in counterclockwise
