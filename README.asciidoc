@@ -40,7 +40,7 @@ image::main_bot.jpg[]
 === Brief description of game logic and code structure
 
 *Game logic* +
-The robot rotates until it sees a ball. If it sees one, it drives towards it, rotates around it until the ball and basket are aligned, and drives towards the ball with the thrower motor engaged.
+The robot uses a state machine for game logic. It rotates until it sees a ball. If it sees one, it drives towards it, rotates around it until the ball and basket are aligned, and drives towards the ball with the thrower motor engaged. Each activity is a programmed as a state.
 
 *Code structure* +
 `motion.py` deals with serial communication and calculating motor speeds +
