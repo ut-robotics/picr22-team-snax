@@ -55,7 +55,7 @@ image::flowchart.jpg[]
 
 === Short analysis of code quality
 
-I think our code is separated quite well into modules and concise. I followed the suggestions on the course home page.
+I think our code is separated quite well into modules and concise. I followed the suggestions on the course home page. It isn't very advanced and doesn't pass all tasks but throws in balls quite consistently.
 
 == Personal comments
 
