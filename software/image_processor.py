@@ -72,48 +72,6 @@ class ImageProcessor():
     def stop(self):
         self.camera.close()
 
-    def find_multiple_matching_pixels(self,color, x, y, image, direction, pixels): 
-            pixel_counter = pixels
-            try:
-                while pixel_counter > 0:
-                    if image[x, y] == color:
-                        pixel_counter -= 1
-                    else:
-                        pixel_counter = 10
-                    if direction == "-y":
-                        y -= 1
-                    if direction == "y":
-                        y += 1
-                    if direction == "-x":
-                        x -= 1
-                    if direction == "x":
-                        x += 1
-                return x, y
-            except:
-                return False
-    
-    def detect_line_between_ball_and_robot(self, x, y,fragmented):
-        rgb = fragmented
-        black = c.Color.BLACK.color.tolist()
-        white = c.Color.WHITE.color.tolist()
-        
-        try:
-            after_dark_cordinates = self.find_multiple_matching_pixels(black, x, y, rgb, "-y", 10)
-            self.find_multiple_matching_pixels(white, after_dark_cordinates[0], after_dark_cordinates[1], rgb, "-y", 10)
-            return True
-        except:
-            return False
-        
-    def detect_if_ball_in_black(self, x, y,fragmented):
-        rgb = fragmented
-        black = c.Color.BLACK.color.tolist()
-        try:
-            self.find_multiple_matching_pixels(black, x, y, rgb, "-x", 30)
-            self.find_multiple_matching_pixels(black, x, y, rgb, "x", 30)
-            return True
-        except:
-            return False
-
     def analyze_balls(self, t_balls, fragments) -> list:
         #maybe this costs a lot of performance
         #t_balls = cv2.morphologyEx(t_balls, cv2.MORPH_OPEN, self.kernelSmall)
@@ -147,7 +105,7 @@ class ImageProcessor():
                 cv2.circle(self.debug_frame,(obj_x, obj_y), 10, (0,255,0), 2)
                 
             #ignore noise above the field and balls over the line and balls in black
-            if obj_y > 80: # and self.detect_if_ball_in_black(obj_x, obj_y,fragments) == False:
+            if obj_y > 80:
                 balls.append(Object(x = obj_x, y = obj_y, size = size, distance = obj_dst, exists = True))
 
         balls.sort(key= lambda x: x.size, reverse = True)
