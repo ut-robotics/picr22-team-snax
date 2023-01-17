@@ -1,2 +1,7 @@
-TODO
-Instructions how to set up and run the code.
+== Instructions
+
+1. Get the required libraries.
+
+2. Run motion.py to test if motors work.
+
+3. Run main.py to see the robot in action.
