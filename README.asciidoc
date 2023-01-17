@@ -37,8 +37,6 @@ image::main_bot.jpg[]
 `math` for trigonometric functions and pi +
 `websocket`, `json` and `multiprocessing` for referee client
 
-I don't know about the image processing segment module.
-
 === Brief description of game logic and code structure
 
 *Game logic* +
