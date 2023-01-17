@@ -45,10 +45,10 @@ I don't know about the image processing segment module.
 The robot rotates until it sees a ball. If it sees one, it drives towards it, rotates around it until the ball and basket are aligned, and drives towards the ball with the thrower motor engaged.
 
 *Code structure* +
-`motion.py` deals with serial communication and calculatig motor speeds +
+`motion.py` deals with serial communication and calculating motor speeds +
 `statemachine.py` describes the states the robot can be in +
 `referee.py` handles referee commands +
-`main.py` is the main program, and also sets some configuration parameters
+`main.py` is the main program, and also sets some configuration parameters +
 The rest of the files deal with image processing.
 
 === Block diagram of game logic 
@@ -58,7 +58,6 @@ image::flowchart.jpg[]
 === Short analysis of code quality
 
 I think our code is separated quite well into modules and concise. I followed the suggestions on the course home page.
-
 
 == Personal comments
 
