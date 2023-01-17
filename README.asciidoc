@@ -53,7 +53,7 @@ The rest of the files deal with image processing.
 
 === Block diagram of game logic 
 
-
+image::flowchart.jpg[]
 
 === Short analysis of code quality
 
