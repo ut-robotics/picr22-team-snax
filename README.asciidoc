@@ -198,31 +198,6 @@ the cables to have better overview. But it turned out ok.
 
 * {blank}
 +
-____
-On which parts of the robot did you work on?
-____
-** Every part of electronics
-* {blank}
-+
-____
-What did you learn?
-____
-** To design a PCB and write and flash firmware
-* {blank}
-+
-____
-What would you do differently next time?
-____
-** Start earlier with the tasks
-* {blank}
-+
-____
-What did you like/did not like about the course/building a robot?
-____
-** The time consumption was much bigger than expected. The materials for
-building the robot weren’t systematically shown in the course webpage –
-this caused a lot of confusion at first and it was hard to start doing
-correct things.
 
 
 == Personal comments
@@ -264,6 +239,15 @@ Suggestions: I didn't have any problems though heard that some ppl were not very
 
 6. It would have been very helpful from the beginning to better understand the importantce/function of x-speed. Also would have been useful to get an explanation about the sample code motor speeds. I found it very difficult to understand in the beginning.
 
+=== Markus Marandi (electronics)
+
+1. I worked with everything regarding electronics.
+
+2. I learned to design a PCB and write and flash firmware.
+
+3. Next time I would start earlier with the tasks.
+
+4. The time consumption was much bigger than expected. The materials for building the robot weren’t systematically shown in the course webpage – this caused a lot of confusion at first and it was hard to start doing correct things.
 
 == Blog
 
