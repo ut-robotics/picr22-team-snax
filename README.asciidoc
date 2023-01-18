@@ -1,7 +1,31 @@
-== Instructions
+This code is used for robots participating in robot basketball competions. The competition rules are described here: https://ut-robotics.github.io/robot-basketball-rules/
 
-1. Get the required libraries.
+== Instructions how to run the code
 
-2. Run motion.py to test if motors work.
+=== Get the required libraries
 
-3. Run main.py to see the robot in action.
+The code uses the following libraries:
+
+`enum` +
+`numpy` +
+`pyrealsense2` +
+`opencv-python` +
+`tkinter` +
+`time` +
+`pyserial` + 
+`struct` +
+`os` +
+`math` +
+`websocket` +
+`json` +
+`multiprocessing`
+
+It is recommended to follow this guide for setup: https://ut-robotics.github.io/picr22-home/boot_camp_tasks/software/setup.html
+
+=== Run motion.py to test if motors and serial communication work.
+
+=== Run main.py to see the robot in action.
+
+If you don't connect to a referee, on line 31 in `main.py` you can choose the basket color you want to throw balls into. You also need to set `competition` to `False` on line 21. +
+On line 37 in `main.py` you can specify referee server IP and port. + 
+You can use `config_colors.py` for color thresholding.
