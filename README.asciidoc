@@ -55,7 +55,10 @@ image::flowchart.jpg[]
 
 === Short analysis of code quality
 
-I think our code is separated quite well into modules and concise. I followed the suggestions on the course home page. It isn't very advanced and doesn't pass all tasks but throws in balls quite consistently.
+I think our code is separated well into modular parts. I followed the suggestions on the course home page regarding common pitfalls (https://ut-robotics.github.io/picr22-home/basketball_robot_guide/software/review_summary.html). The code isn't very advanced and doesn't pass all tasks but throws in balls quite consistently. Our team decided not to build a ball holder and therefore we didn't program that logic. +
+I think we would have benefitted from something more advanced than a proportional controller, which we used in most of the robot's states. We mostly kept the sample image processing code untouched, because it was quite complex. We tried implementing some kind of detection of the playing field's boundaries but failed to create a working solution. The robot may get fouls for driving off the court if it sees balls there or for ramming into the baskets while orbiting or throwing. +
+Unfortunately there is quite a lot of code repetition to implement same logic for different baskets. I now realize how passing the basket color value as a parameter in state functions could have made the code cleaner. +
+Testing our quite limited codebase took more time than was expected beforehand and therefore more advanced functionality was left unimplemented.
 
 == Personal comments
 
