@@ -85,6 +85,21 @@ Suggestions: I didn't have any problems though heard that some ppl were not very
 
 6. I suggest the instructors to keep hosting this course, because the practical skills taught by this course can't be learned from a lecture and are very valuable. Making things in real life teaches a lot. Also, I was impressed how professionally and seamlessly the course was taught. Everything is well-documented and the supporting systems work well.
 
+=== Georg Elias Humal (programming)
+
+1. I worked with most parts of the code excluding orbiting. I also mounted the electronics for the final robot.
+
+2. I learned that taking extra time to set up the proper framework from the beginning really helps make everything more efficient later down the line. I also learned that my habit of making variable names short is very detrimental for the legibility once working with larger code files.
+
+3. I would have started testing the image processing code earlier, so that it could be implemented by the time of the competition.
+
+4. I did not like that we needed to document everything we had done, but making these tasks mandatory by deadlines made it easy to recall what time was actually spent working. I did not find the presentations very useful. I liked that instructors advice was very relevant and useful. I did not encounter a problem that was unfixable even wit the help of instructors.
+
+5. I suggest for next year students to start with everything early on. If encountering a problem with one function/task it might be useful to work on something else for a bit and come back to the problem with a fresh vision.
+
+6. It would have been very helpful from the beginning to better understand the importantce/function of x-speed. Also would have been useful to get an explanation about the sample code motor speeds. I found it very difficult to understand in the beginning.
+
+
 == Blog
 
 === Monday 2022-09-26
