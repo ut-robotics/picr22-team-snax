@@ -1177,8 +1177,8 @@ static void MX_TIM4_Init(void)
  80008ca:	4b19      	ldr	r3, [pc, #100]	; (8000930 <MX_TIM4_Init+0xa4>)
  80008cc:	2200      	movs	r2, #0
  80008ce:	619a      	str	r2, [r3, #24]
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
- 80008d0:	2301      	movs	r3, #1
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
+ 80008d0:	2303      	movs	r3, #3
  80008d2:	60fb      	str	r3, [r7, #12]
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
  80008d4:	2300      	movs	r3, #0
