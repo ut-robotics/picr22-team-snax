@@ -62,10 +62,11 @@ Testing our quite limited codebase took more time than was expected beforehand a
 
 == Electronics 
 
-image:media/image1.png[Map Description automatically
-generated,width=601,height=466]
-
-image:media/image2.png[image,width=365,height=361]
+[cols="a,a", frame=none, grid=none]
+|===
+| image::board_layout.png[]
+| image::board_layout_b.png[]
+|===
 
 Mainboard consists of:
 
