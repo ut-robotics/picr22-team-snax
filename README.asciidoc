@@ -437,4 +437,3 @@ Suggestions: I didn't have any problems though heard that some ppl were not very
 
 === Tuesday 2023-01-17
 *Andres:* creating final documentation for programming and personal comments (1h) +
-
