@@ -1,2 +1,439 @@
-TODO
-Instructions how to set up and run the code.
+= TEAM _SNÄX_
+
+== Members
+Andres Sakk
+
+Markus Marandi
+
+Georg Elias Humal
+
+Anton Rudchenko
+
+== External sources
+
+=== Fusion 360 model
+
+https://a360.co/3vXv8ph
+
+== Mechanics
+
+image::main_bot.jpg[]
+
+1. Everything was done as was suggested (software used, etc.);
+2. Points of interest in the ball thrower designed: it was standart, basic. I decided to make a good version of simple thrower by determining throw angle, making good and rigid structure, connections etc. I didn't go further with ball holder and  adjustable angle designs because we would have no possibility to use those because of absense of any servo channels in our's electronics;
+3. Drilling and threading was done manualy cause of big queue to the drilling machine, thus the accyracy was bad which implied assembling in a bad way; Also, I have not done adjustable thrower and ball holder (partially because it was useless cause of absense of any servo channels on ours electronics) which would be more challenging with currect thrower design's restrictions.
+
+== Programming
+
+=== What libraries did we use? +
+`enum` for Color and State enums +
+`numpy` for data structures +
+`pyrealsense2` for the Realsense camera +
+`cv2` for image processing +
+`time` for testing +
+`pyserial` for serial communication + 
+`struct` for serial communication +
+`os` for finding the correct serial device +
+`math` for trigonometric functions and pi +
+`websocket`, `json` and `multiprocessing` for referee client
+
+=== Brief description of game logic and code structure
+
+*Game logic* +
+The robot uses a state machine for game logic. It rotates until it sees a ball. If it sees one, it drives towards it, rotates around it until the ball and basket are aligned, and drives towards the ball with the thrower motor engaged. Each activity is a programmed as a state.
+
+*Code structure* +
+`motion.py` deals with serial communication and calculating motor speeds +
+`statemachine.py` describes the states the robot can be in +
+`referee.py` handles referee commands +
+`main.py` is the main program, and also sets some configuration parameters +
+The rest of the files deal with image processing.
+
+=== Block diagram of game logic 
+
+image::flowchart.jpg[]
+
+=== Short analysis of code quality
+
+I think our code is separated well into modular parts. I followed the suggestions on the course home page regarding common pitfalls (https://ut-robotics.github.io/picr22-home/basketball_robot_guide/software/review_summary.html). The code isn't very advanced and doesn't pass all tasks but throws in balls quite consistently. Our team decided not to build a ball holder and therefore we didn't program that logic. +
+I think we would have benefitted from something more advanced than a proportional controller, which we used in most of the robot's states. We mostly kept the sample image processing code untouched, because it was quite complex. We tried implementing some kind of detection of the playing field's boundaries but failed to create a working solution. The robot may get fouls for driving off the court if it sees balls there or for ramming into the baskets while orbiting or throwing. +
+Unfortunately there is quite a lot of code repetition to implement same logic for different baskets. I now realize how passing the basket color value as a parameter in state functions could have made the code cleaner. +
+Testing our quite limited codebase took more time than was expected beforehand and therefore more advanced functionality was left unimplemented.
+
+== Electronics 
+
+[cols="a,a", frame=none, grid=none]
+|===
+| image::board_layout.png[]
+| image::board_layout_b.png[]
+|===
+
+Mainboard consists of:
+
+* STM32G441KB microcontroller
+
+* Programmer connector for connecting STLink programmer to the
+microcontroller.
+* USB connector for powering the microcontroller and for communicating
+with robot’s computer.
+* Three motor driver connected to two isolators to avoid short circuits
+on the motor’s side damaging the computer.
+* Three encoder connectors input and one PWM output for controlling the
+thrower
+
+The mainboard is supplied with 16v on the motor drivers side with a
+reverse voltage protection for avoiding reverse voltage damaging the
+components. The motor drivers have 3 x 3 mm pads for each motor driver
+power outputs.
+
+Connector pinouts:
+
+• Power input
+
+* -  J12 -> Power input positive potential
+* -  J14 -> Power input negative potential
+
+• Motor drivers’ outputs
+
+* -  J10/J13 -> Motor driver output for the first motor
+* -  J7/J8 -> Motor driver output for the second motor
+* -  J5/6 -> Motor driver output for the third motor
+
+* •  J1 thrower connector 1- GND
+
+2- PWM +
+3- Not used 
+4- Not used
+
+* •  J2, J3, J4 encoders 1- GND
+
+2- +3,3 +
+3- TIM_CH1 4- TIM_CH2
+
+[width="99%",cols="29%,26%,22%,23%",options="header",]
+|===
+|*COMPONENTS* | | |
+|Name |Comment |Designator |Quantity
+
+|DRV8243 |Motor Driver |U3, U5, U8 |3
+
+a|
+Amphenol 10118193-
+
+0001LF
+
+|USB connector |J9 |1
+
+a|
+CM1223-02SO TVS diode
+
+array
+
+|USB protection |U4 |1
+
+|STM32G441KBT6 |Microcontroller |U1 |1
+
+|MAX14930DASE+ |Isolator (SOIC16 package) |U2, U7 |2
+
+|Micro-Match 215079-4 |Encoder, PWM connectors |J3, J4, J2, J6 |4
+
+a|
+Samtec FTSH-105-01-L-
+
+DV-K
+
+|Programmer connector |J1 |1
+
+|BUK6Y10-30P |Reverse voltage protection |Q1 |1
+
+|NCP164CSN330T1G a|
+Voltage regulator for
+
+microcontroller
+
+|U9 |1
+
+|NCV8730ASN500T1G a|
+Voltage regulator at the
+
+motor driver’s side
+
+|U6 |1
+
+|10k 0603 |Resistor |R1, R5, R10 |3
+
+|1k 0603 |Resistor |R2 |1
+
+|2.7k 0603 |Resistor |R3, R11, R6 |3
+
+|100k 0603 |Resistor |R12, R13, R14 |3
+
+|0.1 uF 0603 |Capacitor (MC) |C1, C5, C6, C2, C3, C4, C7, C8, C9, C10,
+C13 |11
+
+|1 uF 0603 |Capacitor |C11, C12, C14, C15 |4
+
+|10 uF 0805 |Capacitor |C18, C19, C20, C21, C22, C23, C24, C25, C26,
+C27, C28, C29, C30, C31, C32 |*15*
+|===
+
+Firmware:
+https://github.com/ut-robotics/picr22-team-snax/tree/electronics/firmware
+
+Gerber X2 files:
+https://github.com/ut-robotics/picr22-team-snax/blob/electronics/picr22-team-snax-mainboard_v3011.zip
+
+PCB:
+https://github.com/ut-robotics/picr22-team-snax/tree/electronics/picr22-team-snax-mainboard
+
+== Comments
+
+* Should have chosen different motor driver component with a easier
+footprint to solder. Right now the debugging was time consuming and hard
+because every time I had to resolder the driver.
+* Should have used the possibility to do a bit bigger board than 40x40
+mm. Would have been easier on the mainboard side to solder.
+* Cable management was difficult with Test robot – should have marked
+the cables to have better overview. But it turned out ok.
+
+* {blank}
++
+
+
+== Personal comments
+
+=== Anton Rudchenko (mechanics)
+
+1. The entire mechanics was done by me;
+2. I have learned Fusion 360, 3d printing, milling and other manufacturing technics (manual, during assembling);
+3. I hate Fusion, there are other CAD systems I would like to work with next time (it also crashes frequently); 
+4. In general I am satisfied with my mechanics, the bot was moving quite smooth with no vibration, also the team noted through camera stability that alike the test robot, on the new one there was much less vibration. Also, possibly, I have designed the smallest bot during entire course, which is a good challenge to do for myself, cause my previous degree in aviation (we do like saving space and reducing weight much ;3 ).
+
+Suggestions: I didn't have any problems though heard that some ppl were not very happy when they were refused to be moved into the group where they had friends, the reason was that it is not allowed to have 5 members in a team, though there was one another team with 5 members in it... so in general - group formation needs to be improved_)
+
+=== Andres Sakk (programming)
+
+1. I worked on everything in the code except image processing, which I tinkered with very little.
+
+2. My main takeaway from this course is that building a good robot requires that every aspect of the robot works well. All of the electronics depend on the mechanical part of the robot and the code must regard the physical and electronical part of the robot. Testing robot code is very time-consuming, because the program output happens in the physical world.
+
+3. Next time I would like to be involved in more decisions regarding the other aspects of building a robot.
+
+4. I liked the freedom the course offered. No step-by-step guide, but suggestions that let the student explore problems by themself.
+
+5. For next year students I suggest attending the bootcamp. I didn't, and wrapping my head around the sample code was very difficult at first. (I only started making any progress by week 6 or so...) 
+
+6. I suggest the instructors to keep hosting this course, because the practical skills taught by this course can't be learned from a lecture and are very valuable. Making things in real life teaches a lot. Also, I was impressed how professionally and seamlessly the course was taught. Everything is well-documented and the supporting systems work well.
+
+=== Georg Elias Humal (programming)
+
+1. I worked with most parts of the code excluding orbiting. I also mounted the electronics for the final robot.
+
+2. I learned that taking extra time to set up the proper framework from the beginning really helps make everything more efficient later down the line. I also learned that my habit of making variable names short is very detrimental for the legibility once working with larger code files.
+
+3. I would have started testing the image processing code earlier, so that it could be implemented by the time of the competition.
+
+4. I did not like that we needed to document everything we had done, but making these tasks mandatory by deadlines made it easy to recall what time was actually spent working. I did not find the presentations very useful. I liked that instructors advice was very relevant and useful. I did not encounter a problem that was unfixable even wit the help of instructors.
+
+5. I suggest for next year students to start with everything early on. If encountering a problem with one function/task it might be useful to work on something else for a bit and come back to the problem with a fresh vision.
+
+6. It would have been very helpful from the beginning to better understand the importantce/function of x-speed. Also would have been useful to get an explanation about the sample code motor speeds. I found it very difficult to understand in the beginning.
+
+=== Markus Marandi (electronics)
+
+1. I worked with everything regarding electronics.
+
+2. I learned to design a PCB and write and flash firmware.
+
+3. Next time I would start earlier with the tasks.
+
+4. The time consumption was much bigger than expected. The materials for building the robot weren’t systematically shown in the course webpage – this caused a lot of confusion at first and it was hard to start doing correct things.
+
+== Blog
+
+=== Monday 2022-09-26
+
+*Elias:* Soldered adapter for robot battery connector. Worked image processor and compiling new code. (2h) +
+
+*Andres:* Worked image processor and compiling new code. (2h) +
+
+*Anton:* working work (1h) +
+
+=== Thursday 2022-10-06
+
+
+*Whole team*: battery charging instruction (1h) +
+
+*Andres:* implementing omnimotion (1h) +
+
+*Elias:* implementing omnimotion (1h) +
+
+*Anton:* working work again (1h) +
+
+=== Monday 2022-10-10
+
+*Andres:* implementing omnimotion (2.5h) +
+
+*Anton:* thrower design dev started (1h) +
+
+=== Thursday 2022-10-13
+
+*Andres:* implementing motion, fixing import errors (2h) +
+
+*Elias:* implementing motion, fixing import errors (2h) +
+
+*Anton:* doing mechanics (1h) +
+
+*Markus:* assebling test robot electronics (1h) +
+
+=== Thursday 2022-10-20
+
+*Andres:* creating more movement code, refactoring, image processing (1h) +
+
+*Anton:* fixing stuff on thrower (1h) +
+
+=== Monday 2022-10-24
+
+*Andres:* testing movement code, refactoring, image processing, state machine (2h) +
+
+*Elias:* testing movement code, refactoring, image processing, state machine (2h) +
+
+*Anton:* thrower parts manufacturing and assembling (2h) +
+
+=== Thursday 2022-10-27
+
+*Andres:* state machine implementation (2h) +
+
+*Elias:* state machine implementation (2h) +
+
+*Anton:* presenting thrower (1h) +
+
+=== Monday 2022-10-27
+
+*Andres:* state machine implementation (2h) +
+
+*Elias:* state machine implementation (2h) +
+
+*Anton:* assembling of the test robot (1h) +
+
+=== Thursday 2022-11-03
+
+*Andres:* fixing minor issues with test robot electronics (2h) +
+
+*Elias:* fixing minor issues with test robot electronics (2h) +
+
+*Anton:* assembling of the test robot (1h) +
+
+=== Friday 2022-11-04
+
+*Markus:* assebling test robot electronics, connecting thrower electronics (1.5h) +
+
+*Andres:* testing robot on field, implementing orbiting state, image processing (3h) +
+
+=== Sunday 2022-11-06
+
+*Elias:* Testing thrower (2h) +
+
+*Andres:* Testing thrower (2h) +
+
+=== Monday 2022-11-07
+
+*Whole team:* Finishing test robot assembly (3h) +
+
+=== Tuesday 2022-11-08
+
+*Andres:* Creating orbit and throwing states (2.5h) +
+
+=== Wednesday 2022-11-09
+
+*Andres:* Creating orbit and throwing states (4h) +
+
+=== Thursday 2022-11-10
+
+*Anton:* Mounts for wheels machining (3h) +
+
+*Andres:* Trying to qualify for the competition and fixing throw state (3h) +
+
+*Elias:* Trying to qualify for the competition and fixing throw state (3h) +
+
+=== Friday 2022-11-11
+
+*Anton:* Omni wheels design completed, test model fabricated and assembled with test bearing-roller (3h) +
+
+=== Monday 2022-11-14
+
+*Markus:* Started to fix the schematics issues +
+
+*Elias:* Thrower data points (3h) +
+
+=== Tuesday 2022-11-15
+
+*Anton:* Omni wheels nicely produced, assembled... are done in other words :3
+
+=== Thrusday 2022-11-17
+
+*Elias:* Fixing thrower distance data (2h) +
+
+*Anton:* Bottom part desing completed (2h)+
+
+=== Monday 2022-11-21
+
+*Elias:* Fixing thrower distance data (2h) +
+
+*Anton:* Motor mount desing completed (2h)+
+
+=== Wednesday 2022-11-23
+
+*Elias:* Thrower calculations finished (2h) +
+
+*Andres:* Created WebSocket client (3h) +
+
+*Anton:* Camera holder desing completed (2h)+
+
+=== Thursday 2022-11-24
+
+*Elias:* Participating in test competition (3h) +
+
+*Andres:* Participating in test competition (3h) +
+
+*Anton:* Upper plate desing completed (2h)+
+
+*Markus:*: Fixed PCB schematics (4h) +
+
+=== Sunday 2022-11-27
+
+*Andres:* Code refactoring (1.5h)+
+
+*Anton:* Whole new robot design completed (2h)+
+
+*Markus:* Designing PCB (6h)
+
+=== Thursday 2022-12-01
+
+*Anton:* Whole new robot design issues solving (6h)+
+*Markus:* PCB designing (6h)
+
+=== Sunday 2022-12-04
+
+*Markus:* PCB designing (8h) +
+
+=== Monday 2022-12-05
+
+*Anton:* CAM completed, whole new robot fabricated (8h) +
+*Markus:* PCB designing (4h) +
+
+=== Tuesday 2022-12-06
+
+*Anton:* New robot assembling finished (3h) +
+*Markus:* Finished PCB designing (1h) +
+
+=== Wednesday 2022-12-07
+
+*Andres:* Assembling old electronics on new chassis(3h) +
+*Elias:* Assembling old electronics on new chassis(3h) +
+
+=== Monday 2023-01-09
+*Andres:* Dealt with problems noted in code review (1h) +
+
+=== Tuesday 2023-01-17
+*Andres:* creating final documentation for programming and personal comments (1h) +
