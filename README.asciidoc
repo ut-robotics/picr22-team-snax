@@ -1,6 +1,8 @@
 == Mainboard
 
-This board is designed to control 3 motor drivers and 1 additional servo through an external serial connection via USB. It also provides power for the 3 motor drivers, while the servo requires a separate power source. The main communication for each motor is through the STM32G441KBT6 chip, which is programmable through the J2 connector. Power is supplied to the chip via a USB connection that is protected by a CM1223-02SO TVS diode package, and there is also a debug LED to indicate when a signal is being output to the motor drivers. The motor driver side is powered by an external LiPo battery and is isolated from the MCU side, and the signal goes through isolators before reaching the motor drivers for proper power and signal transfer. This board is suitable for operating any brushed 12V DC motor with a power output over 3.2A and is specifically designed to work with 12V Pololu motors with encoders.
+This board is designed to control 3 motor drivers. It also provides power for the 3 motor drivers,  The main communication for each motor is through the STM32G441KBT6 chip. Power is supplied to the chip via a USB connection that is protected by a CM1223-02SO TVS diode package.
+
+ The motor driver side is powered by an external LiPo battery and is isolated from the MCU side, and the signal goes through isolators before reaching the motor drivers for proper power and signal transfer. This board is suitable for operating any brushed 12V DC motor with a power output over 3.2A and is specifically designed to work with 12V Pololu motors with encoders.
 
 
 == Electronics 
