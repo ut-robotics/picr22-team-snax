@@ -69,15 +69,11 @@ Testing our quite limited codebase took more time than was expected beforehand a
 | image::sn2x_robot.jpg[]
 |===
 
-== Comments
+== A short analysis of what was good and bad in your electronics and how to improve.
 
-* Should have chosen different motor driver component with a easier
-footprint to solder. Right now the debugging was time consuming and hard
-because every time I had to resolder the driver.
-* Should have used the possibility to do a bit bigger board than 40x40
-mm. Would have been easier on the mainboard side to solder.
-* Cable management was difficult with Test robot – should have marked
-the cables to have better overview. But it turned out ok.
+* The PCB should had a bit more room on the mainboard side for the better soldering 
+* 5V buck converter was very fragile and when even a slight current fluctuation happened, it burned down and also burned down the isolators
+* Should have used different motor driver's package for better soldering and better debugging - this was the main stumbling block which resulted in 1 motor driver failing to work
 
 * {blank}
 +
