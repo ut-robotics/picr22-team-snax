@@ -95,8 +95,6 @@ The wires and the mainboard was hidden under the computer. Refer to the picture 
 * 5V buck converter was very fragile and when even a slight current fluctuation happened, it burned down and also burned down the isolators
 * Should have used different motor driver's package for better soldering and better debugging - this was the main stumbling block which resulted in 1 motor driver failing to work
 
-* {blank}
-+
 == Personal comments
 
 === Anton Rudchenko (mechanics)
