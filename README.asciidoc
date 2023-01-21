@@ -89,7 +89,7 @@ The wires and the mainboard was hidden under the computer. Refer to the picture 
 |===
 
 
-== A short analysis of what was good and bad in your electronics and how to improve.
+=== A short analysis of what was good and bad in your electronics and how to improve.
 
 * The PCB should had a bit more room on the mainboard side for the better soldering 
 * 5V buck converter was very fragile and when even a slight current fluctuation happened, it burned down and also burned down the isolators
