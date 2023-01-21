@@ -1,25 +1,5 @@
 == Mainboard communication
 
-Included #include "stm32g4xx_hal.h"
-
-Defined pins:app-name: 
-
-#define M1_DIR_Pin GPIO_PIN_0
-#define M1_DIR_GPIO_Port GPIOA
-#define M1_PWM_Pin GPIO_PIN_1
-#define M1_PWM_GPIO_Port GPIOA
-#define M2_DIR_Pin GPIO_PIN_2
-#define M2_DIR_GPIO_Port GPIOA
-#define M2_PWM_Pin GPIO_PIN_3
-#define M2_PWM_GPIO_Port GPIOA
-#define M3_DIR_Pin GPIO_PIN_4
-#define M3_DIR_GPIO_Port GPIOA
-#define M3_PWM_Pin GPIO_PIN_5
-#define M3_PWM_GPIO_Port GPIOA
-#define THROWER_Pin GPIO_PIN_8
-#define THROWER_GPIO_Port GPIOB
-
-
 The mainboard receives structs in the form:
 
 typedef struct Command { 
@@ -32,30 +12,10 @@ typedef struct Command {
 
 The mainboard returns feedback structs in the form:
 
-Typedef struct Feedback { // (3) Define struct for sending data. This can be omitted if there is no need for data from mainboard.
+Typedef struct Feedback {
   int16_t speed1;
   int16_t speed2;
   int16_t speed3;
   uint16_t delimiter;
 
 } Feedback;
-
-Motorcontrol structs:
-
-typedef struct MotorControl {
-	int16_t positionChange;
-	int16_t position;
-	int16_t gainP;
-	int16_t gainI;
-	int32_t integral;
-
-} MotorControl;
-
-MotorControl motorControl_1 = {.positionChange = 0, .position = 0, .gainP = 500, .gainI = 10, .integral = 0};
-MotorControl motorControl_2 = {.positionChange = 0, .position = 0, .gainP = 500, .gainI = 10, .integral = 0};
-MotorControl motorControl_3 = {.positionChange = 0, .position = 0, .gainP = 500, .gainI = 10, .integral = 0};
-
-npsleep Values:
-
-
-uint16_t nsleepPwmValues[2] = {4800, 0};
