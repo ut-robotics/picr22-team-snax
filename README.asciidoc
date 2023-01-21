@@ -97,6 +97,7 @@ The wires and the mainboard was hidden under the computer. Refer to the picture 
 
 * {blank}
 +
+== Personal comments
 
 === Anton Rudchenko (mechanics)
 
