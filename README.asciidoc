@@ -80,13 +80,14 @@ reverse voltage protection for avoiding reverse voltage damaging the
 components. The motor drivers have 3 x 3 mm pads for each motor driver
 power outputs.
 
-[cols="a,a", frame=none, grid=none]
+[cols="a,a,a", frame=none, grid=none]
 |===
 | image::board_layout.png[]
 | image::board_layout_b.png[]
+| image::sn2x_robot.jpg[]
 |===
 
-image::sn2x_robot.jpg[]
+
 
 == A short analysis of what was good and bad in your electronics and how to improve.
 
