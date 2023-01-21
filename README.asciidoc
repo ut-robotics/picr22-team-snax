@@ -62,12 +62,31 @@ Testing our quite limited codebase took more time than was expected beforehand a
 
 == Electronics 
 
+Mainboard consists of:
+
+* STM32G441KB microcontroller
+
+* Programmer connector for connecting STLink programmer to the
+microcontroller.
+* USB connector for powering the microcontroller and for communicating
+with robot’s computer.
+* Three motor driver connected to two isolators to avoid short circuits
+on the motor’s side damaging the computer.
+* Three encoder connectors input and one PWM output for controlling the
+thrower
+
+The mainboard is supplied with 16v on the motor drivers side with a
+reverse voltage protection for avoiding reverse voltage damaging the
+components. The motor drivers have 3 x 3 mm pads for each motor driver
+power outputs.
+
 [cols="a,a", frame=none, grid=none]
 |===
 | image::board_layout.png[]
 | image::board_layout_b.png[]
-| image::sn2x_robot.jpg[]
 |===
+
+image::sn2x_robot.jpg[]
 
 == A short analysis of what was good and bad in your electronics and how to improve.
 
@@ -77,8 +96,6 @@ Testing our quite limited codebase took more time than was expected beforehand a
 
 * {blank}
 +
-
-== Personal comments
 
 === Anton Rudchenko (mechanics)
 
