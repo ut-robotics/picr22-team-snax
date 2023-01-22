@@ -16,7 +16,7 @@ The mainboard returns feedback structs in the form:
 
 [source,C]
 ----
-Typedef struct Feedback {
+typedef struct Feedback {
   int16_t speed1; // encoder values from 1st motor
   int16_t speed2; // encoder values from 2nd motor
   int16_t speed3; // encoder values from 3rd motor
