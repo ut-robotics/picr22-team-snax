@@ -88,11 +88,12 @@ The wires and the mainboard was hidden under the computer. Refer to the picture 
 | image::board_layout_b.png[]
 |===
 
+image::powered_mainboard.jpg
 
 === A short analysis of what was good and bad in your electronics and how to improve.
 
 * The PCB should had a bit more room on the mainboard side for the better soldering 
-* 5V buck converter was very fragile and when even a slight current fluctuation happened, it burned down and also burned down the isolators
+* 5V linear converter was very fragile and when even a slight current fluctuation happened, it burned down and also burned down the isolators
 * Should have used different motor driver's package for better soldering and better debugging - this was the main stumbling block which resulted in 1 motor driver failing to work
 
 == Personal comments
