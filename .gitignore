@@ -1,3 +1,4 @@
 *.LOG
 __Previews/
 History/
+.DS_Store
