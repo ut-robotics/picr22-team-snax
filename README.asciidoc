@@ -1,7 +1,8 @@
 == Mainboard communication
 
 The mainboard receives structs in the form:
-
+[source,C]
+----
 typedef struct Command { 
   int16_t speed1; // Speed value for 1st motor
   int16_t speed2; // Speed value for 2nd motor
@@ -9,9 +10,12 @@ typedef struct Command {
   uint16_t throwerSpeed; // PWM for thrower motor
   uint16_t delimiter; // 0xAAAA
 } Command;
+----
 
 The mainboard returns feedback structs in the form:
 
+[source,C]
+----
 Typedef struct Feedback {
   int16_t speed1; // encoder values from 1st motor
   int16_t speed2; // encoder values from 2nd motor
@@ -19,3 +23,4 @@ Typedef struct Feedback {
   uint16_t delimiter; // 0xAAAA
 
 } Feedback;
+----
