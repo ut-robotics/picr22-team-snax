@@ -6,7 +6,7 @@ The mainboard receives structs in the form:
 typedef struct Command { 
   int16_t speed1; // Speed value for 1st motor
   int16_t speed2; // Speed value for 2nd motor
-  int16_t speed3; // Speed value for 1rd motor
+  int16_t speed3; // Speed value for 3rd motor
   uint16_t throwerSpeed; // PWM for thrower motor
   uint16_t delimiter; // 0xAAAA
 } Command;
