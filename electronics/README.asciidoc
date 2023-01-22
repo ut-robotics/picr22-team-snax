@@ -29,27 +29,27 @@ reverse voltage protection for avoiding reverse voltage damaging the
 components. The motor drivers have 3 x 3 mm pads for each motor driver
 power outputs.
 
-Connector pinouts:
+## Connector pinouts:
 
-• Power input
+### Power input
 
 * -  J12 -> Power input positive potential
 * -  J14 -> Power input negative potential
 
-• Motor drivers’ outputs
+### Motor drivers’ outputs
 
 * -  J10/J13 -> Motor driver output for the first motor
 * -  J7/J8 -> Motor driver output for the second motor
 * -  J5/6 -> Motor driver output for the third motor
 
-* •  J1 thrower connector 1- GND
-
+### J1 thrower connector 
+* 1- GND
 * 2- PWM +
 * 3- Not used 
 * 4- Not used
 
-* •  J2, J3, J4 encoders 1- GND
-
+###  J2, J3, J4 encoders 
+* 1- GND
 * 2- +3,3 +
 * 3- TIM_CH1 4- TIM_CH2
 
