@@ -1,0 +1,64 @@
+== Mainboard
+This board is designed to control 3 motor drivers. It also provides power for the 3 motor drivers,  The main communication for each motor is through the STM32G441KBT6 chip. Power is supplied to the chip via a USB connection that is protected by a CM1223-02SO TVS diode package.
+
+ The motor driver side is powered by an external LiPo battery (up to 16.8V) and is isolated from the MCU side, and the signal goes through isolators before reaching the motor drivers for proper power and signal transfer. This board is suitable for operating any brushed 12V DC motor with up to 3A (limited by motor drivers) each and is specifically designed to work with 12V Pololu motors with encoders. 
+
+== Electronics 
+
+[cols="a,a", frame=none, grid=none]
+|===
+| image::board_layout.png[]
+| image::board_layout_b.png[]
+|===
+
+Mainboard consists of:
+
+* STM32G441KB microcontroller
+
+* Programmer connector for connecting STLink programmer to the
+microcontroller.
+* USB connector for powering the microcontroller and for communicating
+with robot’s computer.
+* Three motor driver connected to two isolators to avoid short circuits
+on the motor’s side damaging the computer.
+* Three encoder connectors input and one PWM output for controlling the
+thrower
+
+The mainboard is supplied with 16v on the motor drivers side with a
+reverse voltage protection for avoiding reverse voltage damaging the
+components. The motor drivers have 3 x 3 mm pads for each motor driver
+power outputs.
+
+Connector pinouts:
+
+• Power input
+
+* -  J12 -> Power input positive potential
+* -  J14 -> Power input negative potential
+
+• Motor drivers’ outputs
+
+* -  J10/J13 -> Motor driver output for the first motor
+* -  J7/J8 -> Motor driver output for the second motor
+* -  J5/6 -> Motor driver output for the third motor
+
+* •  J1 thrower connector 1- GND
+
+* 2- PWM +
+* 3- Not used 
+* 4- Not used
+
+* •  J2, J3, J4 encoders 1- GND
+
+* 2- +3,3 +
+* 3- TIM_CH1 4- TIM_CH2
+
+
+Firmware:
+https://github.com/ut-robotics/picr22-team-snax/tree/electronics/firmware
+
+Gerber X2 files:
+https://github.com/ut-robotics/picr22-team-snax/blob/electronics/picr22-team-snax-mainboard_v3011.zip
+
+PCB:
+https://github.com/ut-robotics/picr22-team-snax/tree/electronics/picr22-team-snax-mainboard

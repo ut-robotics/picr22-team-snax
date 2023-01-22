@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=NetJ5_1 Pin=J5-+
-Change Component Footprint: Designator=U9 Old Footprint=SOP95P250X265-6N New Footprint=SOT23-5
-Change Component Footprint: Designator=U6 Old Footprint=SOP95P275X110-6N New Footprint=SOT23-5
-Add Pin To Net: Unknown Pin: Pin J5-1
