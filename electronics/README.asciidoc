@@ -42,7 +42,7 @@ power outputs.
 * -  J7/J8 -> Motor driver output for the second motor
 * -  J5/6 -> Motor driver output for the third motor
 
-### J1 thrower connector 
+### J6 connector 
 * 1- GND
 * 2- PWM +
 * 3- Not used 
@@ -54,18 +54,9 @@ power outputs.
 * 3- TIM_CH1 
 * 4- TIM_CH2
 
+## Files
 
-* Firmware:
-----
-../picr22-team-snax/firmware/
-----
-
-* Gerber X2 files:
-----
-../picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
-----
-
-* PCB:
-----
-../picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
-----
+[horizontal]
+Firmware:: `../firmware/`
+Gerber X2 files:: `Outputs for picr22-team-snax-mainboard/`
+PCB:: `picr22-team-snax-mainboard.PrjPcb`
