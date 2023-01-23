@@ -50,7 +50,8 @@ power outputs.
 ###  J2, J3, J4 encoders 
 * 1- GND
 * 2- +3,3 +
-* 3- TIM_CH1 4- TIM_CH2
+* 3- TIM_CH1 
+* 4- TIM_CH2
 
 
 Firmware:
