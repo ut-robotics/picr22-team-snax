@@ -55,7 +55,7 @@ power outputs.
 * 4- TIM_CH2
 
 
-*Firmware:
+* Firmware:
 ----
 ../picr22-team-snax/firmware/
 ----
