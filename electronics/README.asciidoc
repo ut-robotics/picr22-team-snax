@@ -1,6 +1,5 @@
 == Mainboard
 This board is designed to control 3 motor drivers. It also provides power for the 3 motor drivers,  The main communication for each motor is through the STM32G441KBT6 chip. Power is supplied to the chip via a USB connection that is protected by a CM1223-02SO TVS diode package.
-
  The motor driver side is powered by an external LiPo battery (up to 16.8V) and is isolated from the MCU side, and the signal goes through isolators before reaching the motor drivers for proper power and signal transfer. This board is suitable for operating any brushed 12V DC motor with up to 3A (limited by motor drivers) each and is specifically designed to work with 12V Pololu motors with encoders. 
 
 == Electronics 
