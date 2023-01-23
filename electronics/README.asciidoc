@@ -59,13 +59,7 @@ Firmware:
 https://github.com/ut-robotics/picr22-team-snax/tree/electronics/firmware
 
 Gerber X2 files:
-[source,java]
-----
- include::{sourcedir}/picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
-----
+ include::/picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
 
 PCB:
-[source,java]
-----
-include::{sourcedir}/picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
-----
+include::/picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
