@@ -55,15 +55,17 @@ power outputs.
 * 4- TIM_CH2
 
 
-Firmware:
-https://github.com/ut-robotics/picr22-team-snax/tree/electronics/firmware
+*Firmware:
+----
+../picr22-team-snax/firmware/
+----
 
 * Gerber X2 files:
 ----
-/picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
+../picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
 ----
 
 * PCB:
 ----
-/picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
+../picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
 ----
