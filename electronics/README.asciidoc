@@ -2,15 +2,7 @@
 This board is designed to control 3 motor drivers. It also provides power for the 3 motor drivers,  The main communication for each motor is through the STM32G441KBT6 chip. Power is supplied to the chip via a USB connection that is protected by a CM1223-02SO TVS diode package.
  The motor driver side is powered by an external LiPo battery (up to 16.8V) and is isolated from the MCU side, and the signal goes through isolators before reaching the motor drivers for proper power and signal transfer. This board is suitable for operating any brushed 12V DC motor with up to 3A (limited by motor drivers) each and is specifically designed to work with 12V Pololu motors with encoders. 
 
-== Electronics 
-
-[cols="a,a", frame=none, grid=none]
-|===
-| image::board_layout.png[]
-| image::board_layout_b.png[]
-|===
-
-Mainboard consists of:
+=== Mainboard consists of:
 
 * STM32G441KB microcontroller
 
@@ -27,6 +19,15 @@ The mainboard is supplied with 16v on the motor drivers side with a
 reverse voltage protection for avoiding reverse voltage damaging the
 components. The motor drivers have 3 x 3 mm pads for each motor driver
 power outputs.
+
+== Electronics 
+
+[cols="a,a", frame=none, grid=none]
+|===
+| image::board_layout.png[]
+| image::board_layout_b.png[]
+|===
+
 
 ## Connector pinouts:
 
@@ -58,7 +59,7 @@ Firmware:
 https://github.com/ut-robotics/picr22-team-snax/tree/electronics/firmware
 
 Gerber X2 files:
-https://github.com/ut-robotics/picr22-team-snax/blob/electronics/picr22-team-snax-mainboard_v3011.zip
+:sourcedir: picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
 
 PCB:
-https://github.com/ut-robotics/picr22-team-snax/tree/electronics/picr22-team-snax-mainboard
+:sourcedir: picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
