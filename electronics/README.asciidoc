@@ -63,7 +63,7 @@ Gerber X2 files:
 ----
 /picr22-team-snax/electronics/Project Outputs for picr22-team-snax-mainboard/
 ----
-----
+
 PCB:
 ----
 /picr22-team-snax/electronics/picr22-team-snax-mainboard.PrjPcb
