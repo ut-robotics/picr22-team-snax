@@ -33,16 +33,16 @@ power outputs.
 
 ### Power input
 
-* -  J12 -> Power input positive potential
-* -  J14 -> Power input negative potential
+* -  J5 -> Power input positive potential
+* -  J11-> Power input negative potential
 
 ### Motor drivers’ outputs
 
-* -  J10/J13 -> Motor driver output for the first motor
-* -  J7/J8 -> Motor driver output for the second motor
-* -  J5/6 -> Motor driver output for the third motor
+* -  J12/J7 -> Motor driver output for the first motor
+* -  J8/J10 -> Motor driver output for the second motor
+* -  J13/14 -> Motor driver output for the third motor
 
-### J6 connector 
+### J6 thrower connector 
 * 1- GND
 * 2- PWM +
 * 3- Not used 
